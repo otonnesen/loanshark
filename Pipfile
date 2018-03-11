@@ -5,7 +5,7 @@ verify_ssl = true
 
 
 [packages]
-
+gunicorn = "*"
 
 [requires]
 python_version = "2.7"
