@@ -5,7 +5,7 @@ filepath = "data.json"
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/data")
 def index():
     with open(filepath, "r") as f:
         d = json.load(f)
