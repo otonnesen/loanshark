@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
 
 filepath = "data.json"
 
@@ -8,6 +8,8 @@ app = Flask(__name__)
 
 @app.route("/data")
 def index():
+    resp = Response("")
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     with open(filepath, "r") as f:
         d = json.load(f)
         return jsonify(d)
