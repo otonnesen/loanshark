@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 
 filepath = "data.json"
 
@@ -14,7 +14,7 @@ def index():
 
 @app.route("/")
 def main():
-    return "Large business"
+    return "test"
 
 
 if __name__ == "__main__":
