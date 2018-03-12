@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+<style>
+    /*              Insert Custom CSS Here          */
+
+    .data_block {
+        background-color: #f0f0f5;
+        width: 80%;
+    }
+</style>
+
+<head>
+    <title>Loan Shark</title>
+    <link rel="icon" type="image/png" href="sharkfin.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+    <center>
+        <h1 id="title">Loan Shark</h1>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <h3>Current Transactions: </h3>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-2">
+                    <div class="container">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            New Loan
+                        </button>
+
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div classs="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title"> Creating New Loan: </h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <!-- Creates the inputs for Loan (See Balsamiq) -->
+                                      <div class="row">
+                                        <div class="col-8">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" id="recip" placeholder="Recipient">
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" id="input" placeholder="Input">
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label for="currency">Select Currency</label>
+                                          <select class="form-control">
+                                            <option>CAD</option>
+                                            <option>USD</option>
+                                            <option>EUR</option>
+                                            <option>GBP</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div id="table" class="container data_block">
+
+        </div>
+
+    </center>
+
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
