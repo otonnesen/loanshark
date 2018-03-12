@@ -1,22 +1,26 @@
 import os
 import json
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, render_template
 
-filepath = "data.json"
+filepath = 'static/data.json'
 
 app = Flask(__name__)
 
-@app.route("/data")
+@app.route('/data')
 def index():
-    with open(filepath, "r") as f:
+    with open(filepath, 'r') as f:
         d = json.load(f)
         return jsonify(d)
 
-@app.route("/")
+@app.route('/')
 def main():
-    return "test"
+    return 'test'
+
+@app.route('/test')
+def test():
+    return render_template('main.html')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
