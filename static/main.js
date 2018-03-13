@@ -33,7 +33,7 @@ function getData() {
     xhttp.onreadystatechange = function() {
 	    console.log(xhttp.status);
 	    console.log("thinking");
-	    if(xhttp.status == 200) {
+	    if(xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) {
 		    console.log("emoji");
     		    d = xhttp.responseText;
 		    console.log("d: "+d);
