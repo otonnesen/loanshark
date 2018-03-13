@@ -1,8 +1,12 @@
 import os
+import psycopg2
 import json
 from flask import Flask, jsonify, render_template
 
 filepath = 'static/data.json'
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 app = Flask(__name__)
 
