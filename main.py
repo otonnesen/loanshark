@@ -16,7 +16,6 @@ cur.execute("CREATE TABLE test (\
         name varchar(40),\
         address varchar(40)\
         );")
->>>>>>> master
 cur.close()
 
 app = Flask(__name__)
