@@ -27,16 +27,17 @@ function getData() {
     let path = "https://loanshark2.herokuapp.com/data";
     let xhttp = new XMLHttpRequest();
     console.log(":|");
+    xhttp.open("GET", path);
     xhttp.onreadystatechange = function() {
 	    console.log(xhttp.status);
 	    console.log("thinking");
 	    if(xhttp.status == 200) {
-		    xhttp.open("GET", path);
-    		    xhttp.send();
 		    console.log("emoji");
+    		    let d = xhttp.responseText;
 	    }
     }
-    let d = xhttp.responseText;
+
+    xhttp.send();
     console.log(d);
     return d;
 }
