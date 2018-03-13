@@ -37,6 +37,7 @@ function getData() {
 		    console.log("emoji");
     		    d = xhttp.responseText;
 		    console.log("d: "+d);
+		    showData(d);
 	    }
     }
 
@@ -45,8 +46,7 @@ function getData() {
     return d;
 }
 
-function showData() {
-    const data = getData();
+function showData(data) {
     let table = document.getElementById('table');
     for (let i=0; i < data.length; i++ ) {
         console.log(data[i]);
@@ -73,4 +73,4 @@ function showData() {
     }
 }
 
-showData()
+getData();
