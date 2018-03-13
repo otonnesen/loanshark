@@ -37,7 +37,7 @@ function getData() {
 		    console.log("emoji");
     		    d = xhttp.responseText;
 		    console.log("d: "+d);
-		    showData(d);
+		    showData(JSON.parse(d));
 	    }
     }
 
