@@ -1,0 +1,24 @@
+.dataBlock{
+    background: grey;
+    height:100px;
+    width: 80%;
+    position:relative;
+}
+
+.date{
+    float: left;
+    padding-top:2px;
+    padding-left:25px;
+}
+
+.transactionInfo {
+    float: left;
+    padding-left: 10%;
+    
+}
+
+.price {
+    float: left;
+    padding-left: 50%;
+    padding-top: 10px;
+}
