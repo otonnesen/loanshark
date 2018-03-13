@@ -29,7 +29,6 @@ function getData() {
     xhttp.open("GET", path);
     xhttp.send();
     let d = xhttp.responseText;
-    console.log(d);
     return d;
 }
 
