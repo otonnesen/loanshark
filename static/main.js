@@ -28,18 +28,19 @@ function getData() {
     let xhttp = new XMLHttpRequest();
     console.log(":|");
     xhttp.open("GET", path);
+    let d;
     xhttp.onreadystatechange = function() {
 	    console.log(xhttp.status);
 	    console.log("thinking");
 	    if(xhttp.status == 200) {
 		    console.log("emoji");
-    		    let d = xhttp.responseText;
-		    console.log(d);
-		    return d;
+    		    d = xhttp.responseText;
 	    }
     }
 
     xhttp.send();
+    console.log(d);
+    return d;
 }
 
 function showData() {
