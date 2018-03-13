@@ -11,7 +11,12 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
 
 cur.execute("DROP TABLE IF EXISTS test;")
-cur.execute("CREATE TABLE test(id integer PRIMARY KEY, name varchar(40), address varchar(40));")
+cur.execute("CREATE TABLE test (\
+        id integer PRIMARY KEY,\
+        name varchar(40),\
+        address varchar(40)\
+        );")
+>>>>>>> master
 cur.close()
 
 app = Flask(__name__)
