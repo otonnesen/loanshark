@@ -1,24 +1,29 @@
 [
     {
-	"month": "March",
-	"date": 10,
+        "month": "March",
+        "date": 10,
         "person": "Oliver",
         "description": "Burger from Caps",
         "cost": 12,
-        "currency": "CAD" 
-    }, {
-	"month": "November",
-	"date": 13,
+        "currency": "CAD",
+        "id": 3
+    },
+    {
+        "month": "November",
+        "date": 13,
         "person": "Matt",
         "description": "T-Shirt bought in States",
         "cost": 30,
-        "currency": "USD"
-    }, {
-	"month": "December",
-	"date": 25,
+        "currency": "USD",
+        "id": 3
+    },
+    {   
+        "month": "December",
+        "date": 25,
         "person": "Victor",
         "description": "Icecream Sandwich",
         "cost": 3,
-        "currency": "CAD"
+        "currency": "CAD",
+        "id": 3
     }
 ]
