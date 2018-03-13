@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "571e5464c3de819e87dbc23ed8d5cb72c1827aea606fbebfa2d56715670670db"
+            "sha256": "7474cccc66b4484fb44ca5be28b0aabc1262602551c2521a22d4e8a7db7b702b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -54,6 +54,13 @@
                 "sha256:a6be69091dac236ea9c6bc7d012beab42010fa914c459791d627dad4910eb665"
             ],
             "version": "==1.0"
+        },
+        "psycopg2-binary": {
+            "hashes": [
+                "sha256:83af04029bcb4b56c852e5876fef71340dcb465fa44fc99f80bac72e10fb0b74",
+                "sha256:de4f88f823037a71ea5ef3c1041d96b8a68d73343133edda684fd42f575bd9d7"
+            ],
+            "version": "==2.7.4"
         },
         "werkzeug": {
             "hashes": [
