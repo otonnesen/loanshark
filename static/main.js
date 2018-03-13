@@ -34,12 +34,12 @@ function getData() {
 	    if(xhttp.status == 200) {
 		    console.log("emoji");
     		    let d = xhttp.responseText;
+		    console.log(d);
+		    return d;
 	    }
     }
 
     xhttp.send();
-    console.log(d);
-    return d;
 }
 
 function showData() {
