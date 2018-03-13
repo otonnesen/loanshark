@@ -1,18 +1,21 @@
 [
     {
-        "date": "March 10",
+	"month": "March",
+	"date": 10,
         "person": "Oliver",
         "description": "Burger from Caps",
         "cost": 12,
         "currency": "CAD" 
     }, {
-        "date": "November 13",
+	"month": "November",
+	"date": 13,
         "person": "Matt",
         "description": "T-Shirt bought in States",
         "cost": 30,
         "currency": "USD"
     }, {
-        "date": "December 25",
+	"month": "December",
+	"date": 25,
         "person": "Victor",
         "description": "Icecream Sandwich",
         "cost": 3,
