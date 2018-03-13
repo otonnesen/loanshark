@@ -23,18 +23,20 @@
     }
 ]*/
 
+var d;
+
 function getData() {
     let path = "https://loanshark2.herokuapp.com/data";
     let xhttp = new XMLHttpRequest();
     console.log(":|");
     xhttp.open("GET", path);
-    let d;
     xhttp.onreadystatechange = function() {
 	    console.log(xhttp.status);
 	    console.log("thinking");
 	    if(xhttp.status == 200) {
 		    console.log("emoji");
     		    d = xhttp.responseText;
+		    console.log("d: "+d);
 	    }
     }
 
