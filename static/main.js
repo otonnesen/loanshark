@@ -50,7 +50,7 @@ function showData(data) {
     let table = document.getElementById('table');
     for (let i=0; i < data.length; i++ ) {
         console.log(data[i]);
-        table.insertAdjacentHTML('beforeend',`<div class="row">
+        table.insertAdjacentHTML('beforeend',`<div class="row data_block">
         <div class="col-2">
             <h4 id="month"> ${data[i].month} </h4>
             <h2 id="day"> ${data[i].date} </h2>
