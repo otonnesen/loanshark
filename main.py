@@ -11,7 +11,7 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
 
 cur.execute('DROP TABLE IF EXISTS test;')
-cur.execute('CREATE TABLE test (id integer PRIMARY KEY, name varchar(40), address varchar(40));')
+cur.execute('CREATE TABLE test (id SERIAL PRIMARY KEY, name varchar(40), address varchar(40));')
 cur.execute("INSERT INTO test (name, address) VALUES ('Oliver', '6431 Riverstone Drive');")
 cur.close()
 
