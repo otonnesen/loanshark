@@ -10,14 +10,14 @@ print(DATABASE_URL)
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 cur = conn.cursor()
-
+'''
 cur.execute('DROP TABLE IF EXISTS test;')
 cur.execute('CREATE SEQUENCE user_id_seq;')
 cur.execute('CREATE TABLE test (user_id smallint NOT NULL DEFAULT nextval(user_id_seq), name varchar(40), address varchar(40));')
 cur.execute('ALTER SEQUENCE user_id_seq OWNED BY user.user_id;')
 cur.execute("INSERT INTO test (name, address) VALUES ('Oliver', '6431 Riverstone Drive');")
 cur.close()
-
+'''
 app = Flask(__name__)
 
 @app.route('/data')
