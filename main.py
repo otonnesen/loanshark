@@ -5,6 +5,7 @@ from flask import Flask, jsonify, render_template
 
 filepath = 'static/data.json'
 DATABASE_URL = os.environ['DATABASE_URL']
+print(DATABASE_URL)
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
