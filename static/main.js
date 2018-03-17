@@ -26,7 +26,7 @@
 var d;
 
 function getData() {
-    let path = "https://loanshark2.herokuapp.com/data";
+    let path = "/data";
     let xhttp = new XMLHttpRequest();
     console.log(":|");
     xhttp.open("GET", path);
