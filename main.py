@@ -4,10 +4,13 @@ import json
 from flask import Flask, jsonify, render_template
 
 filepath = 'static/data.json'
-DATABASE_URL = os.environ['DATABASE_URL']
-print(DATABASE_URL)
+try:
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+except LookupError:
+    DATABASE_URL = 'postgresql://localhost:5432'
+    conn = psycopg2.connect(DATABASE_URL, user='postgres', password='Redbrick09')
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 cur = conn.cursor()
 '''
