@@ -25,6 +25,10 @@
 
 var d;
 
+function insert() {
+
+}
+
 function getData() {
     let path = "/data";
     let xhttp = new XMLHttpRequest();
