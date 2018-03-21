@@ -25,7 +25,7 @@
 
 var d;
 
-function insert() {
+function addUser(first, last) {
 
 }
 
@@ -35,14 +35,14 @@ function getData() {
     console.log(":|");
     xhttp.open("GET", path);
     xhttp.onreadystatechange = function() {
-	    console.log(xhttp.status);
-	    console.log("thinking");
-	    if(xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) {
-		    console.log("emoji");
-    		    d = xhttp.responseText;
-		    console.log("d: "+d);
-		    showData(JSON.parse(d));
-	    }
+        console.log(xhttp.status);
+        console.log("thinking");
+        if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) {
+            console.log("emoji");
+            d = xhttp.responseText;
+            console.log("d: " + d);
+            showData(JSON.parse(d));
+        }
     }
 
     xhttp.send();
@@ -50,11 +50,15 @@ function getData() {
     return d;
 }
 
+function getSqlData() {
+
+}
+
 function showData(data) {
     let table = document.getElementById('table');
-    for (let i=0; i < data.length; i++ ) {
+    for (let i = 0; i < data.length; i++) {
         console.log(data[i]);
-        table.insertAdjacentHTML('beforeend',`<div class="row data_block">
+        table.insertAdjacentHTML('beforeend', `<div class="row data_block">
         <div class="col-2">
             <h4 id="month"> ${data[i].month} </h4>
             <h2 id="day"> ${data[i].date} </h2>
@@ -76,5 +80,3 @@ function showData(data) {
 	<hr>`);
     }
 }
-
-getData();

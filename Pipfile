@@ -9,6 +9,7 @@ verify_ssl = true
 gunicorn = "*"
 flask = "*"
 "psycopg2-binary" = "*"
+"beautifulsoup4" = "*"
 
 
 [requires]
