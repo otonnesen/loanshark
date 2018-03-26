@@ -1,7 +1,7 @@
 [
     {
         "month": "March",
-        "date": 10,
+        "day": 10,
         "person": "Oliver",
         "description": "Burger from Caps",
         "cost": 12,
@@ -10,7 +10,7 @@
     },
     {
         "month": "November",
-        "date": 13,
+        "day": 13,
         "person": "Matt",
         "description": "T-Shirt bought in States",
         "cost": 30,
@@ -19,7 +19,7 @@
     },
     {   
         "month": "December",
-        "date": 25,
+        "day": 25,
         "person": "Victor",
         "description": "Icecream Sandwich",
         "cost": 3,

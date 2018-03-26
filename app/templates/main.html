@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-CA">
+<html lang="en-CA" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
   /*              Insert Custom CSS Here          */
@@ -8,6 +8,7 @@
     background-color: #f0f0f5;
     width: 80%;
   }
+
   .data_block {}
 </style>
 
@@ -37,11 +38,11 @@
         </div>
         <div class="col-4">
           <div class="container">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUser">
               Add User
             </button>
 
-            <div class="modal fade" id="myModal">
+            <div class="modal fade" id="addUser">
               <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -52,21 +53,27 @@
 
                   <div class="modal-body">
                     <!-- Creates the inputs for Loan (See Balsamiq) -->
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="first_name" placeholder="First Name">
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="last_name" placeholder="Last Name">
+                    <form action="/addUser" method="POST">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="first_name"></label>
+                            <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name">
+                          </div>
+                          <div class="form-group">
+                            <label for="last_name"></label>
+                            <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name">
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addUser(document.getElementById('first_name'), document.getElementById('last_name'))">Confirm</button>
+
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- Put a data-dismiss="modal" to dismiss -->
+                          <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
                       </div>
-                    </div>
+                    </form>
 
                   </div>
 
@@ -83,11 +90,11 @@
         <div class="col-2"></div>
         <div class="col-2">
           <div class="container">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newLoan">
               New Loan
             </button>
 
-            <div class="modal fade" id="myModal">
+            <div class="modal fade" id="newLoan">
               <div class="modal-dialog">
                 <div class="modal-content">
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+
+
+<head>
+  <title>Transactions</title>
+  <link rel="icon" type="image/png" href="static/sharkfin.png">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta charset="UTF-8" />
+  <meta name="veiewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    .data_table {
+      background-color: #f0f0f5;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <center>
+    <h1 id="title">Loan Shark</h1>
+    <br>
+    <div class="container">
+      <div class="row">
+        <h3>Current Credits:</h1>
+		  </div>
+    <div id="table" class="container data_table">
+      {% for transaction in transaction_list: %}
+      <div class="row data_block">
+        <div class="col-2">
+          <h4 id="month">{{transaction['date'].strftime("%B")}}</h4>
+          <h2 id="day">{{transaction['date'].day}}</h2>
+        </div>
+        <div class="col-6">
+          <h2 id="sender">{{transaction['sender']}}</h2>
+          <h5 id="description">{{transaction['description']}}</h5>
+        </div>
+        <div class="col-4">
+          <h1 id="cost">{{transaction['cost']}}</h1>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-9">
+              <button type="button" class="btn btn-info">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr /> {% endfor %}
+    </div>
+  </center>
+</body>
+
+</html>
