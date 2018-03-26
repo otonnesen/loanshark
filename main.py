@@ -10,7 +10,6 @@ try:
     DATABASE_URL = os.environ['DATABASE_URL']
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 except LookupError:
-    #conn = psycopg2.connect(dbname='oliver', user='oliver', password='Redbrick09')
     conn = psycopg2.connect(dbname='oliver', user='oliver', password='Redbrick09')
 
 
@@ -34,6 +33,12 @@ def test():
         d = cur.fetchall()
         return jsonify(d)
 
+@app.route('/transactions')
+def transactions():
+    with open(filepath, 'r') as f:
+        d = json.load(f)
+        return render_template('transaction_list.html', transaction_list=d)
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
