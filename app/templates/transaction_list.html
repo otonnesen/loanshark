@@ -3,15 +3,19 @@
 
 
 <head>
-  <title>Transactions</title>
+  <title>debts</title>
   <link rel="icon" type="image/png" href="static/sharkfin.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <meta charset="UTF-8" />
   <meta name="veiewport" content="width=device-width, initial-scale=1" />
 
   <style>
-    .data_table {
+    .credit_table {
       background-color: #f0f0f5;
+    }
+
+    .debt_table {
+      background-color: #ffd4d4;
     }
   </style>
 
@@ -23,24 +27,58 @@
 <body>
   <center>
     <h1 id="title">Loan Shark</h1>
-    <br>
+    <!-- Credit Table -->
+    <br> {% if credEmpty %}
+    <h3>No Credits Found</h3>
     <div class="container">
       <div class="row">
-        <h3>Current Credits:</h1>
+        {% else %}
+        <h3>{{credList[0]['owner']}}'s Credits:</h3>{% endif %}
 		  </div>
-    <div id="table" class="container data_table">
-      {% for transaction in transaction_list: %}
+    <div id="table" class="container credit_table">
+      {% for credit in credList: %}
       <div class="row data_block">
         <div class="col-2">
-          <h4 id="month">{{transaction['date'].strftime("%B")}}</h4>
-          <h2 id="day">{{transaction['date'].day}}</h2>
+          <h4 id="month">{{credit['date'].strftime("%B")}}</h4>
+          <h2 id="day">{{credit['date'].day}}</h2>
         </div>
         <div class="col-6">
-          <h2 id="sender">{{transaction['sender']}}</h2>
-          <h5 id="description">{{transaction['description']}}</h5>
+          <h2 id="sender">{{credit['sender']}}</h2>
+          <h5 id="description">{{credit['description']}}</h5>
         </div>
         <div class="col-4">
-          <h1 id="cost">{{transaction['cost']}}</h1>
+          <h1 id="cost">{{credit['cost']}}</h1>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-9">
+              <button type="button" class="btn btn-info">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr /> {% endfor %}
+    </div>
+    <!-- Debt Table -->
+    <br> {% if debtEmpty %}
+    <h3>No Debts Found</h3>
+        <div class="container">
+          <div class="row">
+            {% else %}
+            <h3>{{debtList[0]['owner']}}'s Debts:</h3>{% endif %}
+		  </div>
+    <div id="table" class="container credit_table">
+      {% for debt in debtList: %}
+      <div class="row data_block">
+        <div class="col-2">
+          <h4 id="month">{{debt['date'].strftime("%B")}}</h4>
+          <h2 id="day">{{debt['date'].day}}</h2>
+        </div>
+        <div class="col-6">
+          <h2 id="sender">{{debt['sender']}}</h2>
+          <h5 id="description">{{debt['description']}}</h5>
+        </div>
+        <div class="col-4">
+          <h1 id="cost">{{debt['cost']}}</h1>
           <div class="row">
             <div class="col-3"></div>
             <div class="col-9">

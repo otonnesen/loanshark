@@ -53,7 +53,7 @@
 
                   <div class="modal-body">
                     <!-- Creates the inputs for Loan (See Balsamiq) -->
-                    <form action="/addUser" method="POST">
+                    <form method="POST">
                       <div class="row">
                         <div class="col-12">
                           <div class="form-group">
@@ -70,7 +70,7 @@
                       <div class="row">
                         <div class="col-12">
                           <!-- Put a data-dismiss="modal" to dismiss -->
-                          <button type="submit" class="btn btn-primary">Confirm</button>
+                          <button type="submit" class="btn btn-primary" id="user-confirm">Confirm</button>
                         </div>
                       </div>
                     </form>
@@ -147,6 +147,17 @@
     </div>
 
   </center>
+
+  <div class="alert alert-success" id="success-alert" {% if not userAddSuccess %} style="visibility: hidden;" {% endif %}>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Success!</strong> User added to database.
+  </div>
+
+  <script>
+    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+      $("#success-alert").slideUp(500);
+    });
+  </script>
 
   <script type="text/javascript" src="../static/main.js"></script>
 </body>
