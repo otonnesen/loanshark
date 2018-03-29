@@ -22,6 +22,23 @@ CREATE SEQUENCE public.uid_seq
   CACHE 1;
 ALTER TABLE public.uid_seq
   OWNER TO oliver;
+-- Table: public.users
+
+-- DROP TABLE public.users;
+
+CREATE TABLE public.users
+(
+  uid integer NOT NULL DEFAULT nextval('uid_seq'::regclass),
+  first_name text NOT NULL,
+  last_name text NOT NULL,
+  CONSTRAINT users2_pkey PRIMARY KEY (uid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.users
+  OWNER TO oliver;
+
 -- Table: public.transactions
 
 -- DROP TABLE public.transactions;
@@ -47,20 +64,3 @@ WITH (
 );
 ALTER TABLE public.transactions
   OWNER TO oliver;
--- Table: public.users
-
--- DROP TABLE public.users;
-
-CREATE TABLE public.users
-(
-  uid integer NOT NULL DEFAULT nextval('uid_seq'::regclass),
-  first_name text NOT NULL,
-  last_name text NOT NULL,
-  CONSTRAINT users2_pkey PRIMARY KEY (uid)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE public.users
-  OWNER TO oliver;
-

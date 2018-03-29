@@ -3,7 +3,7 @@
 
 
 <head>
-  <title>debts</title>
+  <title>Transactions</title>
   <link rel="icon" type="image/png" href="static/sharkfin.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <meta charset="UTF-8" />
@@ -37,7 +37,7 @@
 		  </div>
     <div id="table" class="container credit_table">
       {% for credit in credList: %}
-      <div class="row data_block">
+      <div class="row credit_block">
         <div class="col-2">
           <h4 id="month">{{credit['date'].strftime("%B")}}</h4>
           <h2 id="day">{{credit['date'].day}}</h2>
@@ -66,9 +66,9 @@
             {% else %}
             <h3>{{debtList[0]['owner']}}'s Debts:</h3>{% endif %}
 		  </div>
-    <div id="table" class="container credit_table">
+    <div id="table" class="container debt_table">
       {% for debt in debtList: %}
-      <div class="row data_block">
+      <div class="row debt_block">
         <div class="col-2">
           <h4 id="month">{{debt['date'].strftime("%B")}}</h4>
           <h2 id="day">{{debt['date'].day}}</h2>

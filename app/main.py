@@ -24,34 +24,59 @@ def index():
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    if request.method == 'POST':
-        with conn.cursor() as cur:
-            fName = request.form['first_name']
-            lName = request.form['last_name']
-            cur.execute('SELECT add_user(%s, %s)', (fName, lName))
-            conn.commit()
-            resp = make_response(redirect('/'))
-            if(cur.query == "SELECT add_user('', '')"):
-                return resp
-            resp.set_cookie('userAddSuccess', value='True')
-            return resp
-    resp = make_response(render_template('main.html', userAddSuccess=request.cookies.get('userAddSuccess')))
+    resp = make_response(render_template('main.html', userAddSuccess=request.cookies.get('userAddSuccess'), loanAddSuccess=request.cookies.get('loanAddSuccess')))
     resp.set_cookie('userAddSuccess', value='')
+    resp.set_cookie('loanAddSuccess', value='')
     return resp
 
-@app.route('/data')
-def getData():
+@app.route('/addUser', methods=['POST'])
+def addUser():
+    with conn.cursor() as cur:
+        fName = request.form['first_name']
+        lName = request.form['last_name']
+        resp = make_response(redirect('/'))
+        if(fName=='' or lName==''):
+            return resp
+        cur.execute('SELECT add_user(%s, %s)', (fName, lName))
+        conn.commit()
+        resp.set_cookie('userAddSuccess', value='True')
+        return resp
+
+@app.route('/addLoan', methods=['POST'])
+def addLoan():
+    with conn.cursor() as cur:
+        owner = request.form['owner']
+        sender = request.form['sender']
+        cost = request.form['cost']
+        description = request.form['description']
+        resp = make_response(redirect('/'))
+        if(owner=='' or sender=='' or cost==''):
+            return resp
+        cur.execute('SELECT add_loan(%s, %s, %s, %s)', (int(owner), int(sender), cost, description))
+        conn.commit()
+        resp.set_cookie('loanAddSuccess', value='True')
+        return resp
+
+@app.route('/data/transactions', methods=['GET'])
+def getTransactionData():
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute('SELECT * FROM users ORDER BY uid;')
+        cur.execute('SELECT * FROM get_all_transactions();')
         d = cur.fetchall()
         return jsonify(d)
 
-@app.route('/data/<int:id>')
-def getUserData(id):
+@app.route('/data/users', methods=['GET'])
+def getUserData():
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute('SELECT * FROM get_credit_data(%d)' % id)
+        cur.execute('SELECT * FROM users;')
+        d = cur.fetchall()
+        return jsonify(d) 
+@app.route('/data/<int:id>')
+def getIdData(id):
+    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute('SELECT * FROM get_credit_data(%s)', (id,))
+
         credit = cur.fetchall()
-        cur.execute('SELECT * FROM get_debt_data(%d)' % id)
+        cur.execute('SELECT * FROM get_debt_data(%s)', (id,))
         debt = cur.fetchall()
         return render_template('transaction_list.html', credList=credit, debtList=debt, credEmpty=len(credit)==0, debtEmpty=len(debt)==0)
 
