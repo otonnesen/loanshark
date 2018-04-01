@@ -16,17 +16,9 @@ except LookupError:
 
 app = Flask(__name__)
 
-@app.route('/old')
-def index():
-    with open(filepath, 'r') as f:
-        d = json.load(f)
-        return jsonify(d)
-
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    resp = make_response(render_template('main.html', userAddSuccess=request.cookies.get('userAddSuccess'), loanAddSuccess=request.cookies.get('loanAddSuccess')))
-    resp.set_cookie('userAddSuccess', value='')
-    resp.set_cookie('loanAddSuccess', value='')
+    resp = make_response(render_template('main.html'))
     return resp
 
 @app.route('/addUser', methods=['POST'])

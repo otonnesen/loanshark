@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Transactions - Loan Shark</title>
   <link rel="icon" type="image/png" href="../static/sharkfin.png"/>
-  <link rel="stylesheet" href="../static/transaction_list_copy.css"/>
+  <link rel="stylesheet" href="../static/transaction_list.css"/>
 </head>
 <body>
 <h1>Loan Shark</h1>
@@ -50,7 +50,7 @@
       <tr>
         <td><b>{{debt['date'].strftime("%B")}}</b></td>
         <td>{{debt['sender']}}</td>
-        <td>${{debt['cost']}}</td>
+        <td>-${{(-1)*debt['cost']}}</td>
       </tr>
       <tr>
         <td>{{debt['date'].day}}</td>

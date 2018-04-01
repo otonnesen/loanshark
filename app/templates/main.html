@@ -1,191 +1,40 @@
 <!DOCTYPE html>
-<html lang="en-CA" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<style>
-  /*              Insert Custom CSS Here          */
-
-  .data_table {
-    background-color: #f0f0f5;
-    width: 80%;
-  }
-
-  .data_block {}
-</style>
-
+<html lang="en-CA">
 <head>
-  <meta charset="UTF-8" />
   <title>Loan Shark</title>
-  <link rel="icon" type="image/png" href="static/sharkfin.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link rel="icon" type="image/png" href="../static/sharkfin.png"/>
+  <link rel="stylesheet" href="../static/main.css"/>
+  <script src="../static/main.js"></script>
+  <meta charset="UTF-8"/>
 </head>
-
-
 <body>
-
-
-  <div style="text-align: center;">
-    <h1 id="title">Loan Shark</h1>
-    <br>
-    <div class="container">
-      <div class="row">
-        <div class="col-4">
-          <h3>Current Transactions: </h3>
-        </div>
-        <div class="col-4">
-          <div class="container">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUser">
-              Add User
-            </button>
-
-            <div class="modal fade" id="addUser">
-              <div class="modal-dialog">
-                <div class="modal-content">
-
-                  <div classs="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"> Adding User: </h4>
-                  </div>
-
-                  <div class="modal-body">
-                    <!-- Creates the inputs for user (See Balsamiq) -->
-                    <form action="/addUser" method="POST">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="form-group">
-                            <label for="first_name"></label>
-                            <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="last_name"></label>
-                            <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name" required>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-12">
-                          <button type="submit" class="btn btn-primary" id="user-confirm">Confirm</button>
-                        </div>
-                      </div>
-                    </form>
-
-                  </div>
-
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                      Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-2"></div>
-        <div class="col-2">
-          <div class="container">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newLoan">
-              New Loan
-            </button>
-
-            <div class="modal fade" id="newLoan">
-              <div class="modal-dialog">
-                <div class="modal-content">
-
-                  <div classs="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"> Creating New Loan: </h4>
-                  </div>
-
-                  <div class="modal-body">
-                    <!-- Creates the inputs for loan (See Balsamiq) -->
-                    <form action="/addLoan" method="POST">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="form-group">
-                            <label for="owner"></label>
-                            <input type="text" class="form-control" id="owner" placeholder="To" name="owner" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="sender"></label>
-                            <input type="text" class="form-control" id="sender" placeholder="From" name="sender" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="cost"></label>
-                            <input type="text" class="form-control" id="cost" placeholder="Amount" name="cost" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="description"></label>
-                            <input type="text" class="form-control" id="description" placeholder="Description" name="description">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-12">
-                          <button type="submit" class="btn btn-primary" id="loan-confirm">Confirm</button>
-                        </div>
-                      </div>
-                    </form>
-                      <!-- Might use later
-                      <div clas1s="col-4">
-                        <div class="form-group">
-                          <label for="currency">Select Currency</label>
-                          <select class="form-control">
-                            <option>CAD</option>
-                            <option>USD</option>
-                            <option>EUR</option>
-                            <option>GBP</option>
-                          </select>
-                        </div>
-                      </div>
-                    -->
-
-
-                  </div>
-
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                          Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div id="transactions" class="container data_table">
-
-    </div>
-
+<h1>Loan Shark</h1>
+<button type="button" id="addUserButton" class="add">Add User</button>
+<div id="addUserModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Adding User</h3>
+    <form action="/addUser" method="POST">
+      <input type="text" placeholder="First Name" name="first_name" required/>
+      <input type="text" placeholder="Last Name" name="last_name" required/>
+      <button type="submit" class="submit">Confirm</button>
+    </form>
   </div>
+</div>
 
-  <div class="alert alert-success" id="user-add-success" {% if not userAddSuccess %} style="visibility: hidden;" {% endif %}>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Success!</strong> User added to database.
+<button type="button" id="addLoanButton" class="add">Add Loan</button>
+<div id="addLoanModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Adding Loan</h3>
+    <form action="/addLoan" method="POST">
+      <input type="text" placeholder="To" name="owner" required>
+      <input type="text" placeholder="From" name="sender" required>
+      <input type="text" placeholder="Amount" name="cost" required>
+      <input type="text" placeholder="Description" name="description">
+      <button type="submit" class="submit">Confirm</button>
+    </form>
   </div>
-
-  <div class="alert alert-success" id="loan-add-success" {% if not loanAddSuccess %} style="visibility: hidden;" {% endif %}>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Success!</strong> Loan added.
-  </div>
-
-  <script>
-    $("#user-add-success").fadeTo(2000, 500).slideUp(500, function() {
-      $("#user-add-success").slideUp(500);
-    });
-    $("#loan-add-success").fadeTo(2000, 500).slideUp(500, function() {
-      $("#loan-add-success").slideUp(500);
-    });
-  </script>
-
+</div>
 </body>
-
 </html>
