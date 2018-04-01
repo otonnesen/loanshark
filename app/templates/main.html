@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en-CA">
-<head>
-  <title>Loan Shark</title>
-  <link rel="icon" type="image/png" href="../static/sharkfin.png"/>
-  <link rel="stylesheet" href="../static/main.css"/>
-  <script src="../static/main.js"></script>
-  <meta charset="UTF-8"/>
-</head>
-<body>
+{% extends "base.html" %}
+{% set title='Main' %}
+{% set style='main.css' %}
+{% block head %}
+<script src="{{ url_for('static', filename='main.js')}}"></script>{% endblock %}
+{% block content %}
 <h1>Loan Shark</h1>
 <button type="button" id="addUserButton" class="add">Add User</button>
 <div id="addUserModal" class="modal">
@@ -36,5 +32,4 @@
     </form>
   </div>
 </div>
-</body>
-</html>
+{% endblock %}

@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <title>Login - Loan Shark</title>
-  <link rel="stylesheet" href="../static/login.css"/>
-</head>
-<body>
+{% extends "base.html" %}
+{% set title='Login' %}
+{% set style='login.css' %}
+{% block content %}
 <img src="../static/loanshark.png" alt="Loan Shark"/>
 <form role="login" action="/login" method="POST">
   <input type="email" placeholder="Email" name="email" required/>
@@ -13,5 +9,4 @@
   <button type="submit" name="submit">Sign in</button>
 </form>
 <div class="create">New to Loan Shark? <a href="create.html">Create an account</a></div>
-</body>
-</html>
+{% endblock %}

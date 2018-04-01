@@ -31,7 +31,6 @@ def addUser():
         cur.execute('SELECT add_user(%s, %s)', (fName, lName))
         conn.commit()
         resp = make_response(redirect('/'))
-        resp.set_cookie('userAddSuccess', value='True')
         return resp
 
 @app.route('/addLoan', methods=['POST'])
@@ -46,7 +45,6 @@ def addLoan():
             return resp
         cur.execute('SELECT add_loan(%s, %s, %s, %s)', (int(owner), int(sender), cost, description))
         conn.commit()
-        resp.set_cookie('loanAddSuccess', value='True')
         return resp
 
 @app.route('/data/transactions', methods=['GET'])

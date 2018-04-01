@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8">
+  {% if title %}
+  <title>{{ title }} - Loan Shark</title>
+  {% else %}
+  <title>Welcome to Loan Shark</title>
+  {% endif %}
+  <link rel="icon" href="{{ url_for('static', filename='sharkfin.png')}}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename=style) }}" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+<!-- Put in navbar or something that will be common to all pages -->
+{% block content %}{% endblock %}
+</body>
+</html>

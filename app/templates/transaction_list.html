@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en-CA">
-<head>
-  <meta charset="UTF-8">
-  <title>Transactions - Loan Shark</title>
-  <link rel="icon" type="image/png" href="../static/sharkfin.png"/>
-  <link rel="stylesheet" href="../static/transaction_list.css"/>
-</head>
-<body>
+{% extends "base.html" %}
+{% set title='Transactions' %}
+{% set style='transaction_list.css' %}
+{% block content %}
 <h1>Loan Shark</h1>
 {% if credList|length == 0 %}
 <h2>No Credits Found</h2>
@@ -66,5 +61,4 @@
   {% endif %}
   {% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}
