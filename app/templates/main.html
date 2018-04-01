@@ -28,7 +28,7 @@
 <body>
 
 
-  <center>
+  <div style="text-align: center;">
     <h1 id="title">Loan Shark</h1>
     <br>
     <div class="container">
@@ -58,11 +58,11 @@
                         <div class="col-12">
                           <div class="form-group">
                             <label for="first_name"></label>
-                            <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name">
+                            <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name" required>
                           </div>
                           <div class="form-group">
                             <label for="last_name"></label>
-                            <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name">
+                            <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name" required>
                           </div>
                         </div>
                       </div>
@@ -109,15 +109,15 @@
                         <div class="col-12">
                           <div class="form-group">
                             <label for="owner"></label>
-                            <input type="text" class="form-control" id="owner" placeholder="To" name="owner">
+                            <input type="text" class="form-control" id="owner" placeholder="To" name="owner" required>
                           </div>
                           <div class="form-group">
                             <label for="sender"></label>
-                            <input type="text" class="form-control" id="sender" placeholder="From" name="sender">
+                            <input type="text" class="form-control" id="sender" placeholder="From" name="sender" required>
                           </div>
                           <div class="form-group">
                             <label for="cost"></label>
-                            <input type="text" class="form-control" id="cost" placeholder="Amount" name="cost">
+                            <input type="text" class="form-control" id="cost" placeholder="Amount" name="cost" required>
                           </div>
                           <div class="form-group">
                             <label for="description"></label>
@@ -165,7 +165,7 @@
 
     </div>
 
-  </center>
+  </div>
 
   <div class="alert alert-success" id="user-add-success" {% if not userAddSuccess %} style="visibility: hidden;" {% endif %}>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -186,7 +186,6 @@
     });
   </script>
 
-  <script type="text/javascript" src="../static/main.js"></script>
 </body>
 
 </html>

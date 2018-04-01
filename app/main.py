@@ -11,7 +11,7 @@ try:
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 except LookupError:
     # Local env
-    conn = psycopg2.connect(dbname='oliver', user='oliver', password='Redbrick09')
+    conn = psycopg2.connect(host='localhost', dbname='oliver', user='oliver', password=os.environ['pw'])
 
 
 app = Flask(__name__)
@@ -34,11 +34,9 @@ def addUser():
     with conn.cursor() as cur:
         fName = request.form['first_name']
         lName = request.form['last_name']
-        resp = make_response(redirect('/'))
-        if(fName=='' or lName==''):
-            return resp
         cur.execute('SELECT add_user(%s, %s)', (fName, lName))
         conn.commit()
+        resp = make_response(redirect('/'))
         resp.set_cookie('userAddSuccess', value='True')
         return resp
 
@@ -50,7 +48,7 @@ def addLoan():
         cost = request.form['cost']
         description = request.form['description']
         resp = make_response(redirect('/'))
-        if(owner=='' or sender=='' or cost==''):
+        if(owner==sender):
             return resp
         cur.execute('SELECT add_loan(%s, %s, %s, %s)', (int(owner), int(sender), cost, description))
         conn.commit()
@@ -70,15 +68,20 @@ def getUserData():
         cur.execute('SELECT * FROM users;')
         d = cur.fetchall()
         return jsonify(d) 
+
 @app.route('/data/<int:id>')
 def getIdData(id):
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT * FROM get_credit_data(%s)', (id,))
-
         credit = cur.fetchall()
         cur.execute('SELECT * FROM get_debt_data(%s)', (id,))
         debt = cur.fetchall()
         return render_template('transaction_list.html', credList=credit, debtList=debt, credEmpty=len(credit)==0, debtEmpty=len(debt)==0)
+
+@app.route('/login')
+def login():
+    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        return render_template('login.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

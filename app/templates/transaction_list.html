@@ -5,9 +5,10 @@
 <head>
   <title>Transactions</title>
   <link rel="icon" type="image/png" href="static/sharkfin.png">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <meta charset="UTF-8" />
-  <meta name="veiewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta charset="UTF-8"/>
+  <meta name="veiewport" content="width=device-width, initial-scale=1"/>
 
   <style>
     .credit_table {
@@ -17,6 +18,10 @@
     .debt_table {
       background-color: #ffd4d4;
     }
+
+    .title {
+      text-align: center;
+    }
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -25,16 +30,18 @@
 </head>
 
 <body>
-  <center>
-    <h1 id="title">Loan Shark</h1>
-    <!-- Credit Table -->
+<!-- Apparently <center> is deprecated -->
+<div style="text-align: center">
+  <h1 id="title">Loan Shark</h1>
+  <!-- Credit Table -->
+
+  <div class="container">
     <br> {% if credEmpty %}
     <h3>No Credits Found</h3>
-    <div class="container">
-      <div class="row">
-        {% else %}
-        <h3>{{credList[0]['owner']}}'s Credits:</h3>{% endif %}
-		  </div>
+    <div class="row">
+      {% else %}
+      <h3 class="title">{{credList[0]['owner']}}'s Credits:</h3>{% endif %}
+    </div>
     <div id="table" class="container credit_table">
       {% for credit in credList: %}
       <div class="row credit_block">
@@ -42,54 +49,55 @@
           <h4 id="month">{{credit['date'].strftime("%B")}}</h4>
           <h2 id="day">{{credit['date'].day}}</h2>
         </div>
-        <div class="col-6">
+        <div class="col-4 offset-2" style="text-align: center">
           <h2 id="sender">{{credit['sender']}}</h2>
           <h5 id="description">{{credit['description']}}</h5>
         </div>
-        <div class="col-4">
-          <h1 id="cost">{{credit['cost']}}</h1>
+        <div class="col-3">
+          <h1 id="cost" style="text-align: right">${{credit['cost']}}</h1>
           <div class="row">
-            <div class="col-3"></div>
-            <div class="col-9">
+            <div class="col-1 offset-8">
               <button type="button" class="btn btn-info">Edit</button>
             </div>
           </div>
         </div>
       </div>
-      <hr /> {% endfor %}
+      <hr/>
+      {% endfor %}
     </div>
-    <!-- Debt Table -->
+         <!-- Debt Table -->
     <br> {% if debtEmpty %}
     <h3>No Debts Found</h3>
-        <div class="container">
-          <div class="row">
-            {% else %}
-            <h3>{{debtList[0]['owner']}}'s Debts:</h3>{% endif %}
-		  </div>
-    <div id="table" class="container debt_table">
-      {% for debt in debtList: %}
-      <div class="row debt_block">
-        <div class="col-2">
-          <h4 id="month">{{debt['date'].strftime("%B")}}</h4>
-          <h2 id="day">{{debt['date'].day}}</h2>
-        </div>
-        <div class="col-6">
-          <h2 id="sender">{{debt['sender']}}</h2>
-          <h5 id="description">{{debt['description']}}</h5>
-        </div>
-        <div class="col-4">
-          <h1 id="cost">{{debt['cost']}}</h1>
-          <div class="row">
-            <div class="col-3"></div>
-            <div class="col-9">
-              <button type="button" class="btn btn-info">Edit</button>
+
+    <div class="container">
+      <div class="row">
+        {% else %}
+        <h3 class="title">{{debtList[0]['owner']}}'s Debts:</h3>{% endif %}
+      </div>
+      <div id="table" class="container debt_table">
+        {% for debt in debtList: %}
+        <div class="row debt_block">
+          <div class="col-1" style="text-align: left">
+            <h4 id="month">{{debt['date'].strftime("%B")}}</h4>
+            <h2 id="day">{{debt['date'].day}}</h2>
+          </div>
+          <div class="col-4 offset-3">
+            <h2 id="sender">{{debt['sender']}}</h2>
+            <h5 id="description">{{debt['description']}}</h5>
+          </div>
+          <div class="col-3">
+            <h1 id="cost" style="text-align: right">-${{(-1)*debt['cost']}}</h1>
+            <div class="row">
+              <div class="col-1 offset-8">
+                <button type="button" class="btn btn-info">Edit</button>
+              </div>
             </div>
           </div>
         </div>
+        <hr/>
+        {% endfor %}
       </div>
-      <hr /> {% endfor %}
     </div>
-  </center>
+  </div>
 </body>
-
 </html>
