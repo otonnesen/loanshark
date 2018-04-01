@@ -50,3 +50,8 @@ button {
     border-radius: 6px;
     cursor: not-allowed;
 }
+
+button:hover {
+    background-color: #0576BA;
+    //cursor: pointer;
+}

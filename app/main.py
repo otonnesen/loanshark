@@ -74,7 +74,7 @@ def getIdData(id):
 
 @app.route('/login')
 def login():
-    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+    with conn.cursor() as cur:
         return render_template('login.html')
 
 if __name__ == '__main__':

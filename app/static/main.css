@@ -26,6 +26,11 @@ input {
     border-radius: 6px;
 }
 
+.submit:hover {
+    background-color: #0576BA;
+    cursor: pointer;
+}
+
 .add {
     width: 40%;
     margin: 4%;
@@ -35,6 +40,11 @@ input {
     font-size: 1em;
     padding: 0.5em;
     border-radius: 6px;
+}
+
+.add:hover {
+    background-color: #0576BA;
+    cursor: pointer;
 }
 
 .modal {
