@@ -76,7 +76,7 @@ def getIdData(id):
         credit = cur.fetchall()
         cur.execute('SELECT * FROM get_debt_data(%s)', (id,))
         debt = cur.fetchall()
-        return render_template('transaction_list.html', credList=credit, debtList=debt, credEmpty=len(credit)==0, debtEmpty=len(debt)==0)
+        return render_template('transaction_list.html', credList=credit, debtList=debt)
 
 @app.route('/login')
 def login():

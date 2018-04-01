@@ -1,103 +1,70 @@
 <!DOCTYPE html>
 <html lang="en-CA">
-
-
 <head>
-  <title>Transactions</title>
-  <link rel="icon" type="image/png" href="static/sharkfin.png">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <meta charset="UTF-8"/>
-  <meta name="veiewport" content="width=device-width, initial-scale=1"/>
-
-  <style>
-    .credit_table {
-      background-color: #f0f0f5;
-    }
-
-    .debt_table {
-      background-color: #ffd4d4;
-    }
-
-    .title {
-      text-align: center;
-    }
-  </style>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Transactions - Loan Shark</title>
+  <link rel="icon" type="image/png" href="../static/sharkfin.png"/>
+  <link rel="stylesheet" href="../static/transaction_list_copy.css"/>
 </head>
-
 <body>
-<!-- Apparently <center> is deprecated -->
-<div style="text-align: center">
-  <h1 id="title">Loan Shark</h1>
-  <!-- Credit Table -->
+<h1>Loan Shark</h1>
+{% if credList|length == 0 %}
+<h2>No Credits Found</h2>
+{% else %}
+<h2>{{credList[0]['owner']}}'s Credits:</h2>
+{% endif %}
+<ul class="credit_list">
+  {% for credit in credList: %}
+  <li>
+    <table>
+      <tr>
+        <td><b>{{credit['date'].strftime("%B")}}</b></td>
+        <td>{{credit['sender']}}</td>
+        <td>${{credit['cost']}}</td>
+      </tr>
+      <tr>
+        <td>{{credit['date'].day}}</td>
+        <td><b>{{credit['description']}}</b></td>
+        <td>
+          <button>Edit</button>
+        </td>
+      </tr>
+    </table>
+  </li>
+  {% if not credit == credList[-1] %}
+  <hr/>
+  {% endif %}
+  {% endfor %}
+</ul>
 
-  <div class="container">
-    <br> {% if credEmpty %}
-    <h3>No Credits Found</h3>
-    <div class="row">
-      {% else %}
-      <h3 class="title">{{credList[0]['owner']}}'s Credits:</h3>{% endif %}
-    </div>
-    <div id="table" class="container credit_table">
-      {% for credit in credList: %}
-      <div class="row credit_block">
-        <div class="col-2">
-          <h4 id="month">{{credit['date'].strftime("%B")}}</h4>
-          <h2 id="day">{{credit['date'].day}}</h2>
-        </div>
-        <div class="col-4 offset-2" style="text-align: center">
-          <h2 id="sender">{{credit['sender']}}</h2>
-          <h5 id="description">{{credit['description']}}</h5>
-        </div>
-        <div class="col-3">
-          <h1 id="cost" style="text-align: right">${{credit['cost']}}</h1>
-          <div class="row">
-            <div class="col-1 offset-8">
-              <button type="button" class="btn btn-info">Edit</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr/>
-      {% endfor %}
-    </div>
-         <!-- Debt Table -->
-    <br> {% if debtEmpty %}
-    <h3>No Debts Found</h3>
 
-    <div class="container">
-      <div class="row">
-        {% else %}
-        <h3 class="title">{{debtList[0]['owner']}}'s Debts:</h3>{% endif %}
-      </div>
-      <div id="table" class="container debt_table">
-        {% for debt in debtList: %}
-        <div class="row debt_block">
-          <div class="col-1" style="text-align: left">
-            <h4 id="month">{{debt['date'].strftime("%B")}}</h4>
-            <h2 id="day">{{debt['date'].day}}</h2>
-          </div>
-          <div class="col-4 offset-3">
-            <h2 id="sender">{{debt['sender']}}</h2>
-            <h5 id="description">{{debt['description']}}</h5>
-          </div>
-          <div class="col-3">
-            <h1 id="cost" style="text-align: right">-${{(-1)*debt['cost']}}</h1>
-            <div class="row">
-              <div class="col-1 offset-8">
-                <button type="button" class="btn btn-info">Edit</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr/>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
+{% if debtList|length == 0 %}
+<h2>No Debts Found</h2>
+{% else %}
+<h2>{{debtList[0]['owner']}}'s Debts:</h2>
+{% endif %}
+<ul class="debt_list">
+  {% for debt in debtList: %}
+  <li>
+    <table>
+      <tr>
+        <td><b>{{debt['date'].strftime("%B")}}</b></td>
+        <td>{{debt['sender']}}</td>
+        <td>${{debt['cost']}}</td>
+      </tr>
+      <tr>
+        <td>{{debt['date'].day}}</td>
+        <td><b>{{debt['description']}}</b></td>
+        <td>
+          <button>Edit</button>
+        </td>
+      </tr>
+    </table>
+  </li>
+  {% if not debt == debtList[-1] %}
+  <hr/>
+  {% endif %}
+  {% endfor %}
+</ul>
 </body>
 </html>
