@@ -6,5 +6,6 @@
 * Proper SQL queries (Parametrization, etc.)
 
 ### Todo
-* Make todo list :thinking:
-* Organize todo list? (back end/front end, python/js, etc.)
+* Sanitize form data (xss/wrong type for database)
+* User auth
+

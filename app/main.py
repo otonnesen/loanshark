@@ -2,6 +2,8 @@ import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import json
+# Replaces flask.jsonify to work with Decimal type
+import simplejson
 from flask import Flask, jsonify, render_template, request, redirect, make_response
 
 filepath = 'static/data.json'
@@ -16,7 +18,7 @@ except LookupError:
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def main():
     resp = make_response(render_template('main.html'))
     return resp
@@ -50,7 +52,7 @@ def addLoan():
 @app.route('/data/transactions', methods=['GET'])
 def getTransactionData():
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute('SELECT * FROM get_all_transactions();')
+        cur.execute('SELECT * FROM get_all_transactions() ORDER BY transactionid;')
         d = cur.fetchall()
         return jsonify(d)
 
