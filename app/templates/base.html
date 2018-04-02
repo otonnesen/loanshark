@@ -10,8 +10,14 @@
   <link rel="icon" href="{{ url_for('static', filename='sharkfin.png')}}" />
   <link rel="stylesheet" href="{{ url_for('static', filename=style) }}" />
   {% block head %}{% endblock %}
+
+  <link  rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
 </head>
 <body>
+<ul>
+  <li><a {% if title == 'Main' %} class="active" {% endif %} href="/">Home</a></li>
+  <li><a {% if title == 'Login' %} class="active" {% endif %} href="/login">Login</a></li>
+</ul>
 <!-- Put in navbar or something that will be common to all pages -->
 {% block content %}{% endblock %}
 </body>

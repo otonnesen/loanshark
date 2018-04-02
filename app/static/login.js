@@ -27,6 +27,9 @@ var getData = function (url, params) {
 };
 
 var authenticate = function () {
+    var p = document.getElementById('login');
+    p.innerText = '';
+    p.classList.remove('loginSucces', 'loginFailure');
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var params = JSON.stringify({username: username, password: password});
