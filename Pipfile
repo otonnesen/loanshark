@@ -9,6 +9,7 @@ name = "pypi"
 Flask = "*"
 "psycopg2-binary" = "*"
 simplejson = "*"
+flask-wtf = "*"
 
 [requires]
 python_version = "2.7"

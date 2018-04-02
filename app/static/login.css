@@ -56,3 +56,31 @@ a:hover {
 a:active {
     text-decoration: none;
 }
+
+#login {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    padding: 2%;
+}
+
+@keyframes fade {
+    0% { opacity: 0; }
+    25% { opacity: 0.9; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.loginSuccess {
+    //border: 2px solid chartreuse;
+    background-color: #befbbf;
+    opacity: 0;
+    animation: fade 4s linear;
+}
+
+.loginFailure {
+    //border: 2px solid crimson;
+    background-color: #ffa3a0;
+    opacity: 0;
+    animation: fade 4s linear;
+}

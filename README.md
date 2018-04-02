@@ -7,5 +7,10 @@
 
 ### Todo
 * Sanitize form data (xss/wrong type for database)
-* User auth
-
+* User authentication
+    * Add stored procedures for postgres
+    * New users database columns:
+        * username pkey instead of uid (get rid of uid)
+        * password hash
+        * session cookie
+    * Set session cookies on authenticate

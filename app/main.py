@@ -75,6 +75,15 @@ def login():
     with conn.cursor() as cur:
         return render_template('login.html')
 
+@app.route('/test', methods=['POST'])
+def test():
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    with conn.cursor() as cur:
+        cur.execute('SELECT EXISTS (SELECT * FROM test WHERE username=%s AND password=crypt(%s, password));', (username, password))
+        d=cur.fetchone()
+        return jsonify(d)
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
