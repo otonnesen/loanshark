@@ -1,40 +1,152 @@
-UPDATE public.transactions SET owner = 1, sender = 2, cost = 30.00, date = '2018-11-13', description = 'T-shirt' WHERE transactionid = 1;
-UPDATE public.transactions SET owner = 1, sender = 3, cost = 3.00, date = '2018-12-25', description = 'Icecream Sandwich' WHERE transactionid = 2;
-UPDATE public.transactions SET owner = 3, sender = 2, cost = 14.00, date = '2018-03-14', description = 'Pie' WHERE transactionid = 3;
-UPDATE public.transactions SET owner = 2, sender = 1, cost = 25.00, date = '2018-01-01', description = '2018 glasses' WHERE transactionid = 4;
-UPDATE public.transactions SET owner = 3, sender = 2, cost = 45.00, date = '2018-03-26', description = 'Video Game' WHERE transactionid = 5;
-UPDATE public.transactions SET owner = 3, sender = 2, cost = 80.00, date = '2018-03-26', description = 'Super Mario Odyssey' WHERE transactionid = 6;
-UPDATE public.transactions SET owner = 8, sender = 1, cost = 25.00, date = '2018-03-26', description = 'REDACTED' WHERE transactionid = 7;
-UPDATE public.transactions SET owner = 1, sender = 2, cost = 10.00, date = '2018-03-26', description = 'Test' WHERE transactionid = 9;
-UPDATE public.transactions SET owner = 3, sender = 1, cost = 15.00, date = '2018-03-26', description = 'Humble Bundle' WHERE transactionid = 11;
-UPDATE public.transactions SET owner = 3, sender = 11, cost = 500.00, date = '2018-03-26', description = 'Window repair' WHERE transactionid = 10;
-UPDATE public.transactions SET owner = 8, sender = 4, cost = 25.00, date = '2018-03-27', description = 'Also test' WHERE transactionid = 13;
-UPDATE public.transactions SET owner = 1, sender = 1, cost = 1.00, date = '2018-03-30', description = '' WHERE transactionid = 15;
-UPDATE public.transactions SET owner = 22, sender = 1, cost = 10000.00, date = '2018-03-31', description = 'Money for a new N scale Locomotive' WHERE transactionid = 16;
-UPDATE public.transactions SET owner = 1, sender = 2, cost = 3.00, date = '2018-04-01', description = 'test' WHERE transactionid = 18;
-UPDATE public.transactions SET owner = 2, sender = 1, cost = 1.00, date = '2018-04-01', description = '1' WHERE transactionid = 19;
-UPDATE public.transactions SET owner = 3, sender = 4, cost = 5.00, date = '2018-04-01', description = '6' WHERE transactionid = 20;
-UPDATE public.transactions SET owner = 18, sender = 11, cost = 5000.00, date = '2018-03-29', description = 'Research Endowment' WHERE transactionid = 14;
-UPDATE public.users SET first_name = 'Oliver', last_name = 'Tonnesen', username = null, password = null WHERE uid = 1;
-UPDATE public.users SET first_name = 'Mackenzie', last_name = 'Cooper', username = null, password = null WHERE uid = 2;
-UPDATE public.users SET first_name = 'Victor', last_name = 'Sun', username = null, password = null WHERE uid = 3;
-UPDATE public.users SET first_name = 'Matthew', last_name = 'Holmes', username = null, password = null WHERE uid = 4;
-UPDATE public.users SET first_name = 'Cougar', last_name = 'Oakes', username = null, password = null WHERE uid = 7;
-UPDATE public.users SET first_name = 'Frederick', last_name = 'Odiase', username = null, password = null WHERE uid = 8;
-UPDATE public.users SET first_name = 'John', last_name = 'Doe', username = null, password = null WHERE uid = 9;
-UPDATE public.users SET first_name = 'Peter', last_name = 'Parker', username = null, password = null WHERE uid = 10;
-UPDATE public.users SET first_name = 'Tony', last_name = 'Stark', username = null, password = null WHERE uid = 11;
-UPDATE public.users SET first_name = 'Bruce', last_name = 'Banner', username = null, password = null WHERE uid = 12;
-UPDATE public.users SET first_name = 'Clark', last_name = 'Kent', username = null, password = null WHERE uid = 13;
-UPDATE public.users SET first_name = 'Black', last_name = 'Widow', username = null, password = null WHERE uid = 14;
-UPDATE public.users SET first_name = 'Hawk', last_name = 'Eye', username = null, password = null WHERE uid = 15;
-UPDATE public.users SET first_name = 'Test', last_name = 'ing''); SELECT * FROM users;''', username = null, password = null WHERE uid = 16;
-UPDATE public.users SET first_name = '''', last_name = '''', username = null, password = null WHERE uid = 17;
-UPDATE public.users SET first_name = 'Bill', last_name = 'Bird', username = null, password = null WHERE uid = 18;
-UPDATE public.users SET first_name = 'Barack', last_name = 'Obama', username = null, password = null WHERE uid = 19;
-UPDATE public.users SET first_name = 'Calvin', last_name = 'Broadus', username = null, password = null WHERE uid = 20;
-UPDATE public.users SET first_name = 'Hulk', last_name = 'Hogan', username = null, password = null WHERE uid = 21;
-UPDATE public.users SET first_name = 'Steve', last_name = 'Tonnesen', username = null, password = null WHERE uid = 22;
-UPDATE public.users SET first_name = 'Oliver', last_name = 'Tonnesen', username = null, password = null WHERE uid = 23;
-UPDATE public.users SET first_name = 'Abraham', last_name = 'Lincoln', username = null, password = null WHERE uid = 24;
-UPDATE public.users SET first_name = 'testing1', last_name = 'testing2', username = null, password = null WHERE uid = 25;
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.3
+-- Dumped by pg_dump version 10.3
+
+-- Started on 2018-04-03 16:09:53
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2859 (class 0 OID 24980)
+-- Dependencies: 201
+-- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: oliver
+--
+
+COPY public.test (username, password) FROM stdin;
+test	$2a$06$ZiIPd32JCNdLaM8UN19k6ewblZP72SjdCWakhM3xpIveL9aSaG5XC
+\.
+
+
+--
+-- TOC entry 2855 (class 0 OID 16816)
+-- Dependencies: 197
+-- Data for Name: transactions; Type: TABLE DATA; Schema: public; Owner: oliver
+--
+
+COPY public.transactions (transactionid, owner, sender, cost, date, description) FROM stdin;
+1	1	2	30.00	2018-11-13	T-shirt
+2	1	3	3.00	2018-12-25	Icecream Sandwich
+3	3	2	14.00	2018-03-14	Pie
+4	2	1	25.00	2018-01-01	2018 glasses
+5	3	2	45.00	2018-03-26	Video Game
+6	3	2	80.00	2018-03-26	Super Mario Odyssey
+7	8	1	25.00	2018-03-26	REDACTED
+9	1	2	10.00	2018-03-26	Test
+11	3	1	15.00	2018-03-26	Humble Bundle
+10	3	11	500.00	2018-03-26	Window repair
+13	8	4	25.00	2018-03-27	Also test
+15	1	1	1.00	2018-03-30	
+16	22	1	10000.00	2018-03-31	Money for a new N scale Locomotive
+18	1	2	3.00	2018-04-01	test
+19	2	1	1.00	2018-04-01	1
+20	3	4	5.00	2018-04-01	6
+14	18	11	5000.00	2018-03-29	Research Endowment
+\.
+
+
+--
+-- TOC entry 2857 (class 0 OID 16825)
+-- Dependencies: 199
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: oliver
+--
+
+COPY public.users (uid, first_name, last_name, username, password) FROM stdin;
+1	Oliver	Tonnesen	\N	\N
+2	Mackenzie	Cooper	\N	\N
+3	Victor	Sun	\N	\N
+4	Matthew	Holmes	\N	\N
+7	Cougar	Oakes	\N	\N
+8	Frederick	Odiase	\N	\N
+9	John	Doe	\N	\N
+10	Peter	Parker	\N	\N
+11	Tony	Stark	\N	\N
+12	Bruce	Banner	\N	\N
+13	Clark	Kent	\N	\N
+14	Black	Widow	\N	\N
+15	Hawk	Eye	\N	\N
+16	Test	ing'); SELECT * FROM users;'	\N	\N
+17	'	'	\N	\N
+18	Bill	Bird	\N	\N
+19	Barack	Obama	\N	\N
+20	Calvin	Broadus	\N	\N
+21	Hulk	Hogan	\N	\N
+22	Steve	Tonnesen	\N	\N
+23	Oliver	Tonnesen	\N	\N
+24	Abraham	Lincoln	\N	\N
+25	testing1	testing2	\N	\N
+\.
+
+
+--
+-- TOC entry 2871 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: transactions_transactionid_seq; Type: SEQUENCE SET; Schema: public; Owner: oliver
+--
+
+SELECT pg_catalog.setval('public.transactions_transactionid_seq', 20, true);
+
+
+--
+-- TOC entry 2872 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: oliver
+--
+
+SELECT pg_catalog.setval('public.users_uid_seq', 25, true);
+
+
+SET default_tablespace = '';
+
+--
+-- TOC entry 2729 (class 2606 OID 16836)
+-- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: oliver
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (transactionid);
+
+
+--
+-- TOC entry 2731 (class 2606 OID 16838)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: oliver
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (uid);
+
+
+--
+-- TOC entry 2732 (class 2606 OID 16839)
+-- Name: transactions transactions_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: oliver
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transactions_owner_fkey FOREIGN KEY (owner) REFERENCES public.users(uid);
+
+
+--
+-- TOC entry 2733 (class 2606 OID 16844)
+-- Name: transactions transactions_sender_fkey; Type: FK CONSTRAINT; Schema: public; Owner: oliver
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transactions_sender_fkey FOREIGN KEY (sender) REFERENCES public.users(uid);
+
+
+-- Completed on 2018-04-03 16:09:54
+
+--
+-- PostgreSQL database dump complete
+--
+
