@@ -14,4 +14,11 @@
     <input type="lastname" placeholder="Last Name" id="lastname" required/>
     <button type="submit" id="submit">Create Account</button>
 </form>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<p class="flashes">{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
 {% endblock %}

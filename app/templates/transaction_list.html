@@ -1,8 +1,45 @@
 {% extends "base.html" %}
 {% set title='Transactions' %}
 {% set style='transaction_list.css' %}
+{% block head %}
+<script src="{{ url_for('static', filename='transaction_list.js')}}"></script>{% endblock %}
 {% block content %}
+{% if 'username' in session %}
 <h1>Active Transactions for {{ session['username'] }}</h1>
+
+<div id="addWrapper">
+    <button type="button" id="addCreditButton" class="add">Add Credit</button>
+    <button type="button" id="addDebtButton" class="add">Add Debt</button>
+</div>
+
+<div id="addCreditModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Adding Loan</h3>
+        <form role="addCredit" onsubmit="; return false;">
+            <input type="text" placeholder="From" name="sender" required>
+            <input type="text" placeholder="Amount" name="cost" required>
+            <input type="text" placeholder="Description" name="description">
+            <button type="submit" class="submit">Confirm</button>
+        </form>
+    </div>
+</div>
+
+<div id="addDebtModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Adding Loan</h3>
+        <form role="addDebt" onsubmit="; return false;">
+            <input type="text" placeholder="To" name="owner" required>
+            <input type="text" placeholder="Amount" name="cost" required>
+            <input type="text" placeholder="Description" name="description">
+            <button type="submit" class="submit">Confirm</button>
+        </form>
+    </div>
+</div>
+
+
+<br/>
 {% if credList|length == 0 %}
 <h2>No Credits Found</h2>
 {% else %}
@@ -21,7 +58,7 @@
                 <td>{{credit['date'].day}}</td>
                 <td><b>{{credit['description']}}</b></td>
                 <td>
-                    <button>Edit</button>
+                    <button class="edit">Edit</button>
                 </td>
             </tr>
         </table>
@@ -61,4 +98,7 @@
     {% endif %}
     {% endfor %}
 </ul>
+{% else %}
+<h2>Not Logged In</h2>
+{% endif %}
 {% endblock %}

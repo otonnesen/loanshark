@@ -12,4 +12,11 @@
     <button type="submit" id="submit">Sign in</button>
 </form>
 <div class="create">New to Loan Shark? <a class="acc" href="/create">Create an account</a></div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<p class="flashes">{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
 {% endblock %}

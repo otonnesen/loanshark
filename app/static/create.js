@@ -39,7 +39,7 @@ function addUser() {
 
 function create(success) {
     if (success) {
-        window.location.replace('/')
+        window.location.replace('/login')
     } else {
         var p = document.createElement('P');
         document.getElementsByTagName('BODY')[0].appendChild(p)

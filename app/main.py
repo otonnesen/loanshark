@@ -60,8 +60,15 @@ def getUserData():
         d = cur.fetchall()
         return jsonify(d) 
 
+@app.route('/account', methods=['GET'])
+def account():
+    # Change password, name, etc
+    return ':|'
+
 @app.route('/transactions', methods=['GET'])
 def transactions():
+    if 'username' not in session:
+        return render_template('transaction_list.html')
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         id = session['username']
         cur.execute('SELECT * FROM get_credit_data(%s)', (id,))
@@ -124,12 +131,12 @@ def createUser():
         lastname = request.get_json()['lastname']
         cur.execute('SELECT EXISTS (SELECT * FROM users WHERE username=%s);', (username,))
         d = cur.fetchone()
-        if d['exists']:
-            return jsonify(d)
-        else:
+        if not d['exists']: # Username available
+            print('test')
+            flash('Success! You may now login.')
             cur.execute('SELECT createuser(%s, %s, %s, %s);', (username, password, firstname, lastname))
             conn.commit()
-            return jsonify(d)
+        return jsonify(d)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
