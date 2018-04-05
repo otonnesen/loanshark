@@ -4,7 +4,7 @@ from psycopg2.extras import RealDictCursor
 import json
 # Replaces flask.jsonify to work with Decimal type
 import simplejson
-from flask import Flask, jsonify, render_template, request, redirect, make_response, flash
+from flask import Flask, jsonify, render_template, request, redirect, make_response, session, flash
 from flask_login import LoginManager
 
 try:
@@ -16,11 +16,10 @@ except LookupError:
 
 
 app = Flask(__name__)
-app.secret_key = 'thisismyseceretkey'
+app.secret_key = os.environ['secretkey']
 
 @app.route('/', methods=['GET'])
 def main():
-    flash('test')
     return render_template('main.html')
 
 # @app.route('/addUser', methods=['POST'])
@@ -61,6 +60,16 @@ def getUserData():
         d = cur.fetchall()
         return jsonify(d) 
 
+@app.route('/transactions', methods=['GET'])
+def transactions():
+    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        id = session['username']
+        cur.execute('SELECT * FROM get_credit_data(%s)', (id,))
+        credit = cur.fetchall()
+        cur.execute('SELECT * FROM get_debt_data(%s)', (id,))
+        debt = cur.fetchall()
+        return render_template('transaction_list.html', credList=credit, debtList=debt)
+
 @app.route('/data/<string:id>')
 def getIdData(id):
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
@@ -70,33 +79,41 @@ def getIdData(id):
         debt = cur.fetchall()
         return render_template('transaction_list.html', credList=credit, debtList=debt)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        username = request.get_json()['username']
+        password = request.get_json()['password']
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute('SELECT validate(%s, %s);', (username, password))
+            d = cur.fetchone()
+            if(d['validate']==True):
+                session['username'] = username
+                flash('Login successful!')
+            return jsonify(d)
     with conn.cursor() as cur:
         return render_template('login.html')
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('username', None)
+    return redirect('/')
 
 @app.route('/create')
 def create():
     with conn.cursor() as cur:
         return render_template('create.html')
 
-# @app.route('/test', methods=['POST'])
-# def test():
+# @app.route('/checkCred', methods=['POST'])
+# def checkCred():
 #     username = request.get_json()['username']
 #     password = request.get_json()['password']
 #     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-#         cur.execute('SELECT EXISTS (SELECT * FROM test WHERE username=%s AND password=crypt(%s, password));', (username, password))
+#         cur.execute('SELECT validate(%s, %s);', (username, password))
 #         d = cur.fetchone()
+#         if(d['validate']==True):
+#             session['username'] = username
 #         return jsonify(d)
-
-@app.route('/checkCred', methods=['POST'])
-def checkCred():
-    username = request.get_json()['username']
-    password = request.get_json()['password']
-    with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute('SELECT validate(%s, %s);', (username, password))
-        d = cur.fetchone()
-        return jsonify(d)
 
 @app.route('/createUser', methods=['POST'])
 def createUser():

@@ -2,11 +2,11 @@
 {% set title='Transactions' %}
 {% set style='transaction_list.css' %}
 {% block content %}
-<h1>Loan Shark</h1>
+<h1>Active Transactions for {{ session['username'] }}</h1>
 {% if credList|length == 0 %}
 <h2>No Credits Found</h2>
 {% else %}
-<h2>{{credList[0]['owner']}}'s Credits:</h2>
+<h2>Credits:</h2>
 {% endif %}
 <ul class="credit_list list">
     {% for credit in credList: %}
@@ -36,7 +36,7 @@
 {% if debtList|length == 0 %}
 <h2>No Debts Found</h2>
 {% else %}
-<h2>{{debtList[0]['owner']}}'s Debts:</h2>
+<h2>Debts:</h2>
 {% endif %}
 <ul class="debt_list list">
     {% for debt in debtList: %}

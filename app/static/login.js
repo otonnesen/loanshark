@@ -15,7 +15,7 @@ var authenticate = function () {
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var params = JSON.stringify({username: username, password: password});
-    getData('/checkCred', params);
+    getData('/login', params);
 };
 
 function login(success) {

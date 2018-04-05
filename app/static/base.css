@@ -14,7 +14,7 @@ li.navbar {
     float: left;
 }
 
-li.navbar.login {
+li.navbar.right {
     float: right;
 }
 
@@ -33,3 +33,17 @@ li.navbar a:hover:not(.active) {
 .active {
     background-color: #4CAF50;
 }
+
+#loginmessage {
+    color: white;
+}
+
+#loginmessage :hover {
+    background-color: #333;
+}
+
+.flashes {
+    padding: 1.2%;
+    background-color: #befbbf;
+}
+

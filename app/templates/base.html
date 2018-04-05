@@ -16,23 +16,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}"/>
     <script src="{{ url_for('static', filename='base.js') }}"></script>
 </head>
+
 <body>
 <ul class="navbar">
     <li class="navbar"><a {% if title== 'Main' %} class="active" {% endif %} href="/">Home</a></li>
+
+    {% if 'username' in session %}
     <li class="navbar"><a {% if title== 'Transactions' %} class="active" {% endif %} href="/data/{{ uid
         }}">Transactions</a></li>
-    <li class="navbar"><a {% if title== 'Create' %} class="active" {% endif %} href="/create">Create</a></li>
-    <li class="navbar login"><a {% if title== 'Login' %} class="active" {% endif %} href="/login">Login</a></li>
+    <li class="navbar right"><a href="/logout">Logout</a></li>
+    <li class="navbar right"><a{% if title=='Account' %} class="active" {% endif %} href="/account">Account</a></li>
+    <li class="navbar right" id="loginmessage"><a>Logged in as {{ session['username'] }}</a></li>
+    {% else %}
+    <li class="navbar right"><a {% if title== 'Login' %} class="active" {% endif %} href="/login">Login</a></li>
+    {% endif %}
 </ul>
 {% block content %}{% endblock %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class="flashes">
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
 </body>
 </html>
