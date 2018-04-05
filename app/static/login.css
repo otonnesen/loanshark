@@ -1,7 +1,3 @@
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
 img {
     max-width: 35%;
     display: block;
@@ -66,7 +62,7 @@ a:active {
 
 @keyframes fade {
     0% { opacity: 0; }
-    25% { opacity: 0.9; }
+    10% { opacity: 0.9; }
     90% { opacity: 1; }
     100% { opacity: 0; }
 }

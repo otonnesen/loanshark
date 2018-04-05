@@ -1,24 +1,38 @@
+{% set uid=1 %}
+
 <!DOCTYPE html>
 <html lang="en-CA">
 <head>
-  <meta charset="UTF-8">
-  {% if title %}
-  <title>{{ title }} - Loan Shark</title>
-  {% else %}
-  <title>Welcome to Loan Shark</title>
-  {% endif %}
-  <link rel="icon" href="{{ url_for('static', filename='sharkfin.png')}}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename=style) }}" />
-  {% block head %}{% endblock %}
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{ title }} - Loan Shark</title>
+    {% else %}
+    <title>Welcome to Loan Shark</title>
+    {% endif %}
+    <link rel="icon" href="{{ url_for('static', filename='sharkfin.png')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename=style) }}"/>
+    {% block head %}{% endblock %}
 
-  <link  rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}"/>
+    <script src="{{ url_for('static', filename='base.js') }}"></script>
 </head>
 <body>
-<ul>
-  <li><a {% if title == 'Main' %} class="active" {% endif %} href="/">Home</a></li>
-  <li><a {% if title == 'Login' %} class="active" {% endif %} href="/login">Login</a></li>
+<ul class="navbar">
+    <li class="navbar"><a {% if title== 'Main' %} class="active" {% endif %} href="/">Home</a></li>
+    <li class="navbar"><a {% if title== 'Transactions' %} class="active" {% endif %} href="/data/{{ uid
+        }}">Transactions</a></li>
+    <li class="navbar"><a {% if title== 'Create' %} class="active" {% endif %} href="/create">Create</a></li>
+    <li class="navbar login"><a {% if title== 'Login' %} class="active" {% endif %} href="/login">Login</a></li>
 </ul>
-<!-- Put in navbar or something that will be common to all pages -->
 {% block content %}{% endblock %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashes">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 </body>
 </html>

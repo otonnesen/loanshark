@@ -8,28 +8,28 @@
 {% else %}
 <h2>{{credList[0]['owner']}}'s Credits:</h2>
 {% endif %}
-<ul class="credit_list">
-  {% for credit in credList: %}
-  <li>
-    <table>
-      <tr>
-        <td><b>{{credit['date'].strftime("%B")}}</b></td>
-        <td>{{credit['sender']}}</td>
-        <td>${{credit['cost']}}</td>
-      </tr>
-      <tr>
-        <td>{{credit['date'].day}}</td>
-        <td><b>{{credit['description']}}</b></td>
-        <td>
-          <button>Edit</button>
-        </td>
-      </tr>
-    </table>
-  </li>
-  {% if not credit == credList[-1] %}
-  <hr/>
-  {% endif %}
-  {% endfor %}
+<ul class="credit_list list">
+    {% for credit in credList: %}
+    <li>
+        <table>
+            <tr>
+                <td><b>{{credit['date'].strftime("%B")}}</b></td>
+                <td>{{credit['sender']}}</td>
+                <td>${{credit['cost']}}</td>
+            </tr>
+            <tr>
+                <td>{{credit['date'].day}}</td>
+                <td><b>{{credit['description']}}</b></td>
+                <td>
+                    <button>Edit</button>
+                </td>
+            </tr>
+        </table>
+    </li>
+    {% if not credit == credList[-1] %}
+    <hr/>
+    {% endif %}
+    {% endfor %}
 </ul>
 
 
@@ -38,27 +38,27 @@
 {% else %}
 <h2>{{debtList[0]['owner']}}'s Debts:</h2>
 {% endif %}
-<ul class="debt_list">
-  {% for debt in debtList: %}
-  <li>
-    <table>
-      <tr>
-        <td><b>{{debt['date'].strftime("%B")}}</b></td>
-        <td>{{debt['sender']}}</td>
-        <td>-${{(-1)*debt['cost']}}</td>
-      </tr>
-      <tr>
-        <td>{{debt['date'].day}}</td>
-        <td><b>{{debt['description']}}</b></td>
-        <td>
-          <button>Edit</button>
-        </td>
-      </tr>
-    </table>
-  </li>
-  {% if not debt == debtList[-1] %}
-  <hr/>
-  {% endif %}
-  {% endfor %}
+<ul class="debt_list list">
+    {% for debt in debtList: %}
+    <li>
+        <table>
+            <tr>
+                <td><b>{{debt['date'].strftime("%B")}}</b></td>
+                <td>{{debt['sender']}}</td>
+                <td>-${{(-1)*debt['cost']}}</td>
+            </tr>
+            <tr>
+                <td>{{debt['date'].day}}</td>
+                <td><b>{{debt['description']}}</b></td>
+                <td>
+                    <button>Edit</button>
+                </td>
+            </tr>
+        </table>
+    </li>
+    {% if not debt == debtList[-1] %}
+    <hr/>
+    {% endif %}
+    {% endfor %}
 </ul>
 {% endblock %}

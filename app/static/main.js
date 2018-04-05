@@ -8,13 +8,13 @@ window.onload = function () {
     var spanU = document.getElementsByClassName("close")[0];
     var spanL = document.getElementsByClassName("close")[1];
 
-    btnU.onclick = function () {
+    /*btnU.onclick = function () {
         modalU.style.display = "block";
-    };
+    };*/
 
-    btnL.onclick = function () {
+    /*btnL.onclick = function () {
         modalL.style.display = "block"
-    };
+    };*/
 
     spanU.onclick = function () {
         modalU.style.display = "none";

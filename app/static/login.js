@@ -1,58 +1,52 @@
-var getJSON = function (url, params, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
-
-    xhr.responseType = 'json';
-    xhr.onload = function () {
-        var status = xhr.status;
-        if (status === 200) {
-            callback(null, xhr.response);
-        } else {
-            callback(status, xhr.response);
-        }
-    };
-    xhr.send(params);
-};
-
 var getData = function (url, params) {
     getJSON(url, params,
         function (err, data) {
             if (err !== null) {
                 console.log("Error retrieving data: " + err);
             } else {
-                login(data[0]);
+                login(data['validate']);
             }
+            //document.getElementById('submit').style.cursor = '';
         });
 };
 
 var authenticate = function () {
-    var p = document.getElementById('login');
-    p.innerText = '';
-    p.classList.remove('loginSucces', 'loginFailure');
+    //document.getElementById('submit').style.cursor = 'not-allowed';
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var params = JSON.stringify({username: username, password: password});
-    getData('/test', params);
+    getData('/checkCred', params);
 };
 
 function login(success) {
     if (success) {
         loginSuccess();
         // set session cookie
+        window.location.replace('/');
     } else {
         loginFailure();
     }
-};
+}
 
 function loginSuccess() {
-    var p = document.getElementById('login');
+    if (document.contains(document.getElementById('login'))) {
+        document.getElementById('login').remove();
+    }
+    var p = document.createElement('P');
+    document.getElementsByTagName('BODY')[0].appendChild(p)
+    p.setAttribute('id', 'login');
     p.innerText = 'Login Success';
     p.classList.add('loginSuccess');
-};
 
-var loginFailure = function () {
-    var p = document.getElementById('login');
+}
+
+function loginFailure() {
+    if (document.contains(document.getElementById('login'))) {
+        document.getElementById('login').remove();
+    }
+    var p = document.createElement('P');
+    document.getElementsByTagName('BODY')[0].appendChild(p);
+    p.setAttribute('id', 'login');
     p.innerText = 'Login Failure';
     p.classList.add('loginFailure');
-};
+}

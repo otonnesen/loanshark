@@ -1,0 +1,32 @@
+img {
+    max-width: 35%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form {
+    text-align: center;
+}
+
+input {
+    width: 35%;
+    padding: 1%;
+    margin: 1% auto;
+    display: block;
+}
+
+button {
+    width: 35%;
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    font-size: 1em;
+    padding: 0.5em;
+    border-radius: 6px;
+}
+
+button:hover {
+    background-color: #0576BA;
+    cursor: pointer;
+}

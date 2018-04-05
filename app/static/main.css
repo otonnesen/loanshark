@@ -1,7 +1,3 @@
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
 h1, h3 {
     text-align: center;
 }
@@ -40,11 +36,12 @@ input {
     font-size: 1em;
     padding: 0.5em;
     border-radius: 6px;
+    cursor: not-allowed;
 }
 
 .add:hover {
     background-color: #0576BA;
-    cursor: pointer;
+    //cursor: pointer;
 }
 
 .modal {
