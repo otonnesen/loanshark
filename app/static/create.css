@@ -30,3 +30,8 @@ button:hover {
     background-color: #0576BA;
     cursor: pointer;
 }
+
+#alert {
+    padding: 1.2%;
+    background-color: #fb978d;
+}

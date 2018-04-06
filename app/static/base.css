@@ -26,6 +26,10 @@ li.navbar a {
     text-decoration: none;
 }
 
+li.navbar a:hover {
+    cursor: pointer;
+}
+
 li.navbar a:hover:not(.active) {
     background-color: #111;
 }
@@ -34,12 +38,13 @@ li.navbar a:hover:not(.active) {
     background-color: #4CAF50;
 }
 
-#loginmessage {
+#loginMessage {
     color: white;
 }
 
-#loginmessage :hover {
+#loginMessage :hover {
     background-color: #333;
+    cursor: auto;
 }
 
 .flashes {
@@ -47,3 +52,55 @@ li.navbar a:hover:not(.active) {
     background-color: #befbbf;
 }
 
+.logoutModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.logoutModal-content {
+    text-align: center;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+a.logoutModalButton {
+    text-decoration: none;
+    width: 40%;
+    margin: 4%;
+    border: none;
+    color: white;
+    font-size: 1em;
+    padding: 0.5em;
+    border-radius: 6px;
+}
+
+a.logoutModalButton:hover {
+    cursor: pointer;
+}
+
+#logoutCancel {
+    background-color: #FF8990;
+}
+
+#logoutCancel:hover {
+    background-color: #ff5260;
+}
+
+#logoutConfirm {
+    background-color: #008CBA;
+}
+
+#logoutConfirm:hover {
+    background-color: #0576BA;
+}

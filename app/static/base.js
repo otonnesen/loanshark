@@ -14,3 +14,18 @@ var getJSON = function (url, params, callback) {
     };
     xhr.send(params);
 };
+
+function logoutButton() {
+    document.getElementById('logoutModal').style.display = "block";
+}
+
+function cancel() {
+    document.getElementById('logoutModal').style.display = "none";
+}
+
+window.addEventListener('click', function (event) {
+    if(event.target == document.getElementById('logoutModal')) {
+        document.getElementById('logoutModal').style.display = "none";
+    }
+});
+document.getElementById("debtModal")

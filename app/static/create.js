@@ -17,17 +17,24 @@ function addUser() {
     }
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
+    var confirm = document.getElementById('confirm').value;
     var firstname = document.getElementById('firstname').value;
     var lastname = document.getElementById('lastname').value;
     if (!username.match(checkString)) {
         var p = document.createElement('P');
-        document.getElementsByTagName('BODY')[0].appendChild(p)
+        document.getElementsByTagName('BODY')[0].appendChild(p);
         p.setAttribute('id', 'alert');
         p.innerText = 'Invalid Username';
         return;
+    } else if (password !== confirm) {
+        var p = document.createElement('P');
+        document.getElementsByTagName('BODY')[0].appendChild(p);
+        p.setAttribute('id', 'alert');
+        p.innerText = 'Passwords do not match';
+        return;
     } else if (!firstname.match(checkString) || !lastname.match(checkString)) {
         var p = document.createElement('P');
-        document.getElementsByTagName('BODY')[0].appendChild(p)
+        document.getElementsByTagName('BODY')[0].appendChild(p);
         p.setAttribute('id', 'alert');
         p.innerText = 'Invalid Name';
         return;

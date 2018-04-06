@@ -9,10 +9,10 @@
     {% endif %}
     <link rel="icon" href="{{ url_for('static', filename='sharkfin.png')}}"/>
     <link rel="stylesheet" href="{{ url_for('static', filename=style) }}"/>
-    {% block head %}{% endblock %}
 
     <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}"/>
     <script src="{{ url_for('static', filename='base.js') }}"></script>
+    {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -20,14 +20,22 @@
     <li class="navbar"><a {% if title== 'Main' %} class="active" {% endif %} href="/">Home</a></li>
 
     {% if 'username' in session %}
-    <li class="navbar"><a {% if title== 'Transactions' %} class="active" {% endif %} href="/transactions">Transactions</a></li>
-    <li class="navbar right"><a href="/logout">Logout</a></li>
-    <li class="navbar right"><a{% if title=='Account' %} class="active" {% endif %} href="/account">Account</a></li>
-    <li class="navbar right" id="loginmessage"><a>Logged in as {{ session['username'] }}</a></li>
+    <li class="navbar"><a {% if title== 'Transactions' %} class="active" {% endif %}
+        href="/transactions">Transactions</a></li>
+    <li class="navbar right"><a id="logoutButton" onclick="logoutButton();">Logout</a></li>
+    <li class="navbar right"><a{% if title=='Settings' %} class="active" {% endif %} href="/settings">Settings</a></li>
+    <li class="navbar right" id="loginMessage"><a>Logged in as {{ session['username'] }}</a></li>
     {% else %}
     <li class="navbar right"><a {% if title== 'Login' %} class="active" {% endif %} href="/login">Login</a></li>
     {% endif %}
 </ul>
+<div id="logoutModal" class="logoutModal">
+    <div class="logoutModal-content">
+        <h3>Are you sure?</h3>
+        <a id="logoutCancel" class="logoutModalButton" onclick="cancel();">Cancel</a>
+        <a id="logoutConfirm" class="logoutModalButton" href="/logout">Logout</a>
+    </div>
+</div>
 {% block content %}{% endblock %}
 </body>
 </html>

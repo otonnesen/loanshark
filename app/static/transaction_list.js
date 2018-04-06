@@ -1,34 +1,22 @@
-window.onload = function () {
-    var creditModal = document.getElementById("addCreditModal");
-    var debtModal = document.getElementById("addDebtModal");
+function creditButton() {
+    document.getElementById("creditModal").style.display = "block";
+}
 
-    var creditBtn = document.getElementById("addCreditButton");
-    var debtBtn = document.getElementById("addDebtButton");
+function debtButton() {
+    document.getElementById("debtModal").style.display = "block";
+}
 
-    var creditSpan = document.getElementsByClassName("close")[0];
-    var debtSpan = document.getElementsByClassName("close")[0];
+function creditClose() {
+    document.getElementById("creditModal").style.display = "none";
+}
 
-    creditBtn.onclick = function () {
-        creditModal.style.display = "block"
-    };
+function debtClose() {
+    document.getElementById("debtModal").style.display = "none";
+}
 
-    debtBtn.onclick = function () {
-        debtModal.style.display = "block"
-    };
-
-    creditSpan.onclick = function () {
-        creditModal.style.display = "none";
-    };
-
-    debtSpan.onclick = function () {
-        debtModal.style.display = "none";
-    };
-
-    window.onclick = function (event) {
-        if (event.target == creditModal || event.target == debtModal) {
-            creditModal.style.display = "none";
-            debtModal.style.display = "none";
-        }
-    };
-};
-
+window.addEventListener('click', function (event) {
+    if (event.target == creditModal || event.target == debtModal) {
+        document.getElementById("creditModal").style.display = "none";
+        document.getElementById("debtModal").style.display = "none";
+    }
+});

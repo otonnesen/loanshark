@@ -6,7 +6,7 @@
         - [x] username pkey instead of uid (get rid of uid)
         - [x] password hash
         - [x] session cookie
-- [ ] 'Account' page
+- [x] 'Account' page
     - [ ] Change password/first name/last name
 - [ ] Add transactions 
     - [ ] Notifications for incoming transactions?

@@ -1,0 +1,38 @@
+ul.sidebar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+li.sidebar a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li.sidebar a.sidebarActive {
+    background-color: #4CAF50;
+    color: white;
+}
+
+li.sidebar a:hover:not(.sidebarActive) {
+    background-color: #555555;
+    color: white;
+}
+
+div.content:not(.sidebarActive) {
+    display: none;
+}
+
+div.settingsWrapper {
+    margin-left: 25%;
+    padding: 1px 16px;
+    height: 1000px;
+}

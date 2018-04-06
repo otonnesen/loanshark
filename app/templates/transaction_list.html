@@ -8,13 +8,13 @@
 <h1>Active Transactions for {{ session['username'] }}</h1>
 
 <div id="addWrapper">
-    <button type="button" id="addCreditButton" class="add">Add Credit</button>
-    <button type="button" id="addDebtButton" class="add">Add Debt</button>
+    <button type="button" id="addCreditButton" class="add" onclick="creditButton();">Add Credit</button>
+    <button type="button" id="addDebtButton" class="add" onclick="debtButton();">Add Debt</button>
 </div>
 
-<div id="addCreditModal" class="modal">
+<div id="creditModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close" onclick="creditClose();">&times;</span>
         <h3>Adding Loan</h3>
         <form role="addCredit" onsubmit="; return false;">
             <input type="text" placeholder="From" name="sender" required>
@@ -25,9 +25,9 @@
     </div>
 </div>
 
-<div id="addDebtModal" class="modal">
+<div id="debtModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close" onclick="debtClose();">&times;</span>
         <h3>Adding Loan</h3>
         <form role="addDebt" onsubmit="; return false;">
             <input type="text" placeholder="To" name="owner" required>

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% set title='Settings' %}
+{% set style='settings.css' %}
+{% block head %}
+<script src="{{ url_for('static', filename='settings.js')}}"></script>{% endblock %}
+{% block content %}
+{% if 'username' in session %}
+<ul class="sidebar">
+    <li class="sidebar"><a class="sidebarActive profile" onclick="setActive('profile');">Profile</a></li>
+    <li class="sidebar"><a class="account" onclick="setActive('account');">Account</a></li>
+    <li class="sidebar"><a class="foo" onclick="setActive('foo');">Foo</a></li>
+</ul>
+<div class="settingsWrapper"><div class="content sidebarActive profile">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lorem elementum,
+    porttitor lectus ut, vulputate elit. Nullam est lectus, venenatis rutrum rutrum sit amet, porta nec justo. Aenean
+    egestas nulla non neque ornare, vel elementum lorem posuere. Lorem ipsum dolor sit amet, consectetur adipiscing
+    elit. Donec vulputate nec velit et vestibulum. Fusce vitae neque nisl. Pellentesque habitant morbi tristique
+    senectus et netus et malesuada fames ac turpis egestas. Curabitur iaculis vestibulum eros, iaculis pretium eros
+    eleifend vel.</div>
+    <div class="content account">Duis nec rutrum felis, vel hendrerit purus. Quisque ut fermentum ex, id elementum lacus. Suspendisse potenti.
+        Suspendisse arcu ipsum, iaculis volutpat leo quis, mollis fringilla mi. Pellentesque ultricies erat lorem,
+        iaculis euismod leo accumsan at. Sed id eros lectus. Proin eget quam et est porttitor laoreet. Fusce dictum
+        laoreet vehicula. Phasellus a nibh et tortor laoreet malesuada et et nunc. Cras a vulputate magna, vitae
+        lobortis mi. Maecenas tincidunt imperdiet ligula, vel consequat lorem euismod non.</div>
+    <div class="content foo">Aliquam erat volutpat. Nulla interdum sed elit at mattis. Phasellus pulvinar cursus tortor, at elementum metus.
+        Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus eleifend suscipit orci non porta. Donec
+        non dapibus sem, sodales lacinia augue. Aenean porttitor vitae massa vitae convallis. Phasellus nec cursus
+        leo.</div></div>
+{% else %}
+<h2>Not Logged In</h2>
+{% endif %}
+{% endblock %}

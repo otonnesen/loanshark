@@ -48,6 +48,8 @@ def main():
 
 @app.route('/data/transactions', methods=['GET'])
 def getTransactionData():
+    if not session['username'] == 'admin':
+        return 'Access Denied' #TODO
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT * FROM get_all_transactions() ORDER BY transactionid;')
         d = cur.fetchall()
@@ -55,15 +57,17 @@ def getTransactionData():
 
 @app.route('/data/users', methods=['GET'])
 def getUserData():
+    if not session['username'] == 'admin':
+        return 'Access Denied'
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT * FROM users;')
         d = cur.fetchall()
         return jsonify(d) 
 
-@app.route('/account', methods=['GET'])
-def account():
+@app.route('/settings', methods=['GET'])
+def settings():
     # Change password, name, etc
-    return ':|'
+    return render_template('settings.html')
 
 @app.route('/transactions', methods=['GET'])
 def transactions():
@@ -79,12 +83,12 @@ def transactions():
 
 @app.route('/data/<string:id>')
 def getIdData(id):
+    if not session['username'] == 'admin':
+        return 'Access Denied' #TODO
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute('SELECT * FROM get_credit_data(%s)', (id,))
-        credit = cur.fetchall()
-        cur.execute('SELECT * FROM get_debt_data(%s)', (id,))
-        debt = cur.fetchall()
-        return render_template('transaction_list.html', credList=credit, debtList=debt)
+        cur.execute('SELECT * FROM get_credit_data(%s) UNION SELECT * FROM get_debt_data(%s)', (id, id))
+        d = cur.fetchall()
+        return jsonify(d)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -104,6 +108,7 @@ def login():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop('username', None)
+    flash('Logged out')
     return redirect('/')
 
 @app.route('/create')
