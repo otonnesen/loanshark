@@ -21,7 +21,6 @@ var authenticate = function () {
 function login(success) {
     if (success) {
         loginSuccess();
-        // set session cookie
         window.location.replace('/');
     } else {
         loginFailure();
@@ -33,7 +32,7 @@ function loginSuccess() {
         document.getElementById('login').remove();
     }
     var p = document.createElement('P');
-    document.getElementsByTagName('BODY')[0].appendChild(p)
+    document.getElementsByTagName('BODY')[0].appendChild(p);
     p.setAttribute('id', 'login');
     p.innerText = 'Login Success';
     p.classList.add('loginSuccess');

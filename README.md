@@ -9,7 +9,9 @@
 - [x] 'Account' page
     - [ ] Change password/first name/last name
 - [ ] Add transactions 
-    - [ ] Notifications for incoming transactions?
-    - [ ] Complete transactions
+    - [x] Sanitize money data in js ($10,000.00 -> 10000, etc.)
+    - [x] Separate tables for confirmed (by both parties) transactions and unconfirmed transactions
+    - [x] Notifications for incoming transactions?
+    	- Kind of done, I guess?
     - [ ] Transfer transactions
-
+- [x] Make database schema (Tables, sequences, functions, etc)

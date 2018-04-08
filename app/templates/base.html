@@ -17,16 +17,20 @@
 
 <body>
 <ul class="navbar">
-    <li class="navbar"><a {% if title== 'Main' %} class="active" {% endif %} href="/">Home</a></li>
+    <li class="navbar"><a {% if title== 'Main' %} class="active"
+        {% else %} href="/" {% endif %}>Home</a></li>
 
     {% if 'username' in session %}
-    <li class="navbar"><a {% if title== 'Transactions' %} class="active" {% endif %}
-        href="/transactions">Transactions</a></li>
+    <li class="navbar"><a {% if title== 'Transactions' %} class="active"
+        {% else %} href="/transactions"{% endif %}>Transactions</a></li>
     <li class="navbar right"><a id="logoutButton" onclick="logoutButton();">Logout</a></li>
-    <li class="navbar right"><a{% if title=='Settings' %} class="active" {% endif %} href="/settings">Settings</a></li>
+    <li class="navbar right"><a{% if title=='Settings' %} class="active"
+        {% else %} href="/settings" {% endif %}>Settings</a></li>
     <li class="navbar right" id="loginMessage"><a>Logged in as {{ session['username'] }}</a></li>
     {% else %}
-    <li class="navbar right"><a {% if title== 'Login' %} class="active" {% endif %} href="/login">Login</a></li>
+
+    <li class="navbar right"><a {% if title== 'Login' %} class="active"
+        {% else %} href="/login" {% endif %}>Login</a></li>
     {% endif %}
 </ul>
 <div id="logoutModal" class="logoutModal">

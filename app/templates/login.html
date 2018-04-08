@@ -6,8 +6,8 @@
 {% block content %}
 <img src="../static/loanshark.png" alt="Loan Shark"/>
 
-<form role="login" onsubmit="authenticate(); return false;">
-    <input type="username" placeholder="Username" id="username" required/>
+<form role="form" onsubmit="authenticate(); return false;">
+    <input type="text" placeholder="Username" id="username" required/>
     <input type="password" placeholder="Password" id="password" required/>
     <button type="submit" id="submit">Sign in</button>
 </form>

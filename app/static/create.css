@@ -6,11 +6,17 @@ img {
 }
 
 form {
+    padding-top: 1%;
     text-align: center;
 }
 
+fieldset {
+    margin: auto;
+    width: 40%;
+}
+
 input {
-    width: 35%;
+    width: 85%;
     padding: 1%;
     margin: 1% auto;
     display: block;

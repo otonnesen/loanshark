@@ -1,3 +1,5 @@
+/* vv Active Transactions vv */
+
 h1, h2 {
     text-align: center;
 }
@@ -14,7 +16,7 @@ td {
 }
 
 hr {
-    border-top: 1px solid rgba(0,0,0,0.1)
+    border-top: 1px solid rgba(0, 0, 0, 0.1)
 }
 
 ul.list {
@@ -27,8 +29,13 @@ ul.list {
     border-radius: 25px;
 }
 
-.credit_list { background-color: #f0f0f5; }
-.debt_list { background-color: #ffd4d4; }
+.credit_list {
+    background-color: #f0f0f5;
+}
+
+.debt_list {
+    background-color: #ffd4d4;
+}
 
 b {
     font-weight: normal;
@@ -47,12 +54,16 @@ button.edit {
 
 button.edit:hover {
     background-color: #0576BA;
-    //cursor: pointer;
+/ / cursor: pointer;
 }
 
 #addWrapper {
     text-align: center;
 }
+
+/* ^^ Active Transactions ^^ */
+
+/* vv Button Modals vv */
 
 .add {
     background-color: #008CBA;
@@ -103,8 +114,8 @@ input {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
@@ -124,7 +135,107 @@ input {
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: #111111;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* ^^ Button Modals ^^ */
+
+/* vv Pending Transactions vv */
+
+#awaitingConfirmation {
+    font-size: 1.5em;
+}
+
+#confirmTransaction {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    font-size: 0.5em;
+    padding: 0.5em;
+    border-radius: 6px;
+}
+
+#confirmTransaction:hover {
+    background-color: #0576BA;
+    cursor: pointer;
+}
+
+ul.pendingList {
+    width: 80%;
+    margin: auto;
+    list-style-type: none;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+ul.pendingList li {
+    padding: 2% 0;
+}
+
+ul.pendingList li.credit {
+    background-color: #f0f0f5;
+}
+
+ul.pendingList li.debt {
+    background-color: #ffd4d4;
+}
+
+ul.pendingList li.first {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+ul.pendingList li.last {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+/* ^^ Pending Transactions ^^ */
+
+/* vv Secondary Navbar vv */
+
+ul.transNavbar {
+    list-style-type: none;
+    margin: 0 0 2% 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #666666;
+}
+
+li.transNavbar {
+    float: left;
+}
+
+li.transNavbar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li.transNavbar a:hover {
+    cursor: pointer;
+}
+
+li.transNavbar a:hover:not(.transActive) {
+    background-color: #555555;
+}
+
+li.transNavbar a.transActive {
+    background-color: #4CAF50;
+}
+
+div.content:not(.transActive) {
+    display: none;
+}
+
+/* ^^ Secondary Navbar ^^ */
+
+#alert {
+    padding: 1.2%;
+    background-color: #fb978d;
 }

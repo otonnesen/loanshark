@@ -49,7 +49,7 @@ function create(success) {
         window.location.replace('/login')
     } else {
         var p = document.createElement('P');
-        document.getElementsByTagName('BODY')[0].appendChild(p)
+        document.getElementsByTagName('BODY')[0].appendChild(p);
         p.setAttribute('id', 'alert');
         p.innerText = 'Username Taken';
     }

@@ -5,7 +5,6 @@ import json
 # Replaces flask.jsonify to work with Decimal type
 import simplejson
 from flask import Flask, jsonify, render_template, request, redirect, make_response, session, flash
-from flask_login import LoginManager
 
 try:
     DATABASE_URL = os.environ['DATABASE_URL']
@@ -32,6 +31,32 @@ def main():
 #         resp = make_response(redirect('/'))
 #         return resp
 
+@app.route('/addCredit', methods=['POST'])
+def addCredit():
+    sender = request.get_json()['sender']
+    cost = request.get_json()['cost']
+    description = request.get_json()['description']
+    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute('SELECT EXISTS (SELECT * FROM users WHERE username=%s);', (sender,))
+        d = cur.fetchone()
+        if d['exists']:
+            cur.execute('SELECT add_loan(%s, %s, %s, %s, %s);', (session['username'], sender, cost, description, session['username']))
+            conn.commit()
+        return jsonify(d)
+
+@app.route('/addDebt', methods=['POST'])
+def addDebt():
+    owner = request.get_json()['owner']
+    cost = request.get_json()['cost']
+    description = request.get_json()['description']
+    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute('SELECT EXISTS (SELECT * FROM users WHERE username=%s);', (owner,))
+        d = cur.fetchone()
+        if d['exists']:
+            cur.execute('SELECT add_loan(%s, %s, %s, %s, %s);', (owner, session['username'],  cost, description, session['username']))
+            conn.commit()
+        return jsonify(d)
+
 # @app.route('/addLoan', methods=['POST'])
 # def addLoan():
 #     with conn.cursor() as cur:
@@ -48,7 +73,9 @@ def main():
 
 @app.route('/data/transactions', methods=['GET'])
 def getTransactionData():
-    if not session['username'] == 'admin':
+    if not 'username' in session:
+        return 'Access Denied' #TODO
+    elif session['username'] != 'admin':
         return 'Access Denied' #TODO
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT * FROM get_all_transactions() ORDER BY transactionid;')
@@ -57,10 +84,12 @@ def getTransactionData():
 
 @app.route('/data/users', methods=['GET'])
 def getUserData():
-    if not session['username'] == 'admin':
-        return 'Access Denied'
+    if not 'username' in session:
+        return 'Access Denied' #TODO
+    elif session['username'] != 'admin':
+        return 'Access Denied' #TODO
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute('SELECT * FROM users;')
+        cur.execute('SELECT username, firstname, lastname FROM users;')
         d = cur.fetchall()
         return jsonify(d) 
 
@@ -75,18 +104,30 @@ def transactions():
         return render_template('transaction_list.html')
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         id = session['username']
-        cur.execute('SELECT * FROM get_credit_data(%s)', (id,))
-        credit = cur.fetchall()
-        cur.execute('SELECT * FROM get_debt_data(%s)', (id,))
-        debt = cur.fetchall()
-        return render_template('transaction_list.html', credList=credit, debtList=debt)
+        cur.execute('SELECT * FROM get_credit_data_confirmed(%s)', (id,))
+        credConfirmed = cur.fetchall()
+        cur.execute('SELECT * FROM get_debt_data_confirmed(%s)', (id,))
+        debtConfirmed = cur.fetchall()
+        cur.execute('SELECT * FROM get_credit_data_unconfirmed(%s) UNION SELECT * FROM get_debt_data_unconfirmed(%s)', (id, id))
+        pending = cur.fetchall()
+        return render_template('transaction_list.html', credListConfirmed=credConfirmed, debtListConfirmed=debtConfirmed, pending=pending)
+
+@app.route('/confirmTransaction', methods=['POST'])
+def confirmTransaction():
+    tid = request.get_json()['tid']
+    with conn.cursor() as cur:
+        cur.execute('UPDATE transactions SET confirmed=%s WHERE transactionid=%s', ('t', tid,))
+        conn.commit()
+        return jsonify({'success':True})
 
 @app.route('/data/<string:id>')
 def getIdData(id):
-    if not session['username'] == 'admin':
+    if not 'username' in session:
+        return 'Access Denied' #TODO
+    elif session['username'] != 'admin':
         return 'Access Denied' #TODO
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute('SELECT * FROM get_credit_data(%s) UNION SELECT * FROM get_debt_data(%s)', (id, id))
+        cur.execute('SELECT * FROM get_credit_data_confirmed(%s) UNION SELECT * FROM get_debt_data_confirmed(%s)', (id, id))
         d = cur.fetchall()
         return jsonify(d)
 
@@ -98,8 +139,12 @@ def login():
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute('SELECT validate(%s, %s);', (username, password))
             d = cur.fetchone()
-            if(d['validate']==True):
+            if(d['validate'] == True):
                 session['username'] = username
+                conn.commit()
+                cur.execute('SELECT firstname FROM USERS WHERE username=%s', (username,))
+                f = cur.fetchone()
+                session['firstname'] = f['firstname']
                 flash('Login successful!')
             return jsonify(d)
     with conn.cursor() as cur:
@@ -129,15 +174,15 @@ def create():
 
 @app.route('/createUser', methods=['POST'])
 def createUser():
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    firstname = request.get_json()['firstname']
+    lastname = request.get_json()['lastname']
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        username = request.get_json()['username']
-        password = request.get_json()['password']
-        firstname = request.get_json()['firstname']
-        lastname = request.get_json()['lastname']
         cur.execute('SELECT EXISTS (SELECT * FROM users WHERE username=%s);', (username,))
         d = cur.fetchone()
+        print(d)
         if not d['exists']: # Username available
-            print('test')
             flash('Success! You may now login.')
             cur.execute('SELECT createuser(%s, %s, %s, %s);', (username, password, firstname, lastname))
             conn.commit()

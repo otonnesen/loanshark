@@ -2,10 +2,21 @@
 {% set title='Transactions' %}
 {% set style='transaction_list.css' %}
 {% block head %}
-<script src="{{ url_for('static', filename='transaction_list.js')}}"></script>{% endblock %}
+<script src="{{ url_for('static', filename='transaction_list.js') }}"></script>{% endblock %}
 {% block content %}
 {% if 'username' in session %}
-<h1>Active Transactions for {{ session['username'] }}</h1>
+<ul class="transNavbar">
+    <li class="transNavbar"><a class="confirmed transActive" onclick="setActive('confirmed');">Confirmed</a></li>
+    <li class="transNavbar"><a class="pending" onclick="setActive('pending');">Pending</a></li>
+</ul>
+
+<div class="content confirmed transActive">
+    <h1>Active Transactions for {{ session['firstname'] }}</h1>
+</div>
+
+<div class="content pending">
+    <h1>Pending Transactions for {{ session['firstname'] }}</h1>
+</div>
 
 <div id="addWrapper">
     <button type="button" id="addCreditButton" class="add" onclick="creditButton();">Add Credit</button>
@@ -16,10 +27,10 @@
     <div class="modal-content">
         <span class="close" onclick="creditClose();">&times;</span>
         <h3>Adding Loan</h3>
-        <form role="addCredit" onsubmit="; return false;">
-            <input type="text" placeholder="From" name="sender" required>
-            <input type="text" placeholder="Amount" name="cost" required>
-            <input type="text" placeholder="Description" name="description">
+        <form role="form" onsubmit="addCredit(); return false;">
+            <input type="text" placeholder="From" id="sender" required>
+            <input type="number" min="1" step="any" placeholder="Amount" id="credCost" required>
+            <input type="text" placeholder="Description" id="credDesc">
             <button type="submit" class="submit">Confirm</button>
         </form>
     </div>
@@ -29,75 +40,124 @@
     <div class="modal-content">
         <span class="close" onclick="debtClose();">&times;</span>
         <h3>Adding Loan</h3>
-        <form role="addDebt" onsubmit="; return false;">
-            <input type="text" placeholder="To" name="owner" required>
-            <input type="text" placeholder="Amount" name="cost" required>
-            <input type="text" placeholder="Description" name="description">
+        <form role="form" onsubmit="addDebt(); return false;">
+            <input type="text" placeholder="To" id="owner" required>
+            <input type="number" min="1" step="any" placeholder="Amount" id="debtCost" required>
+            <input type="text" placeholder="Description" id="debtDesc">
             <button type="submit" class="submit">Confirm</button>
         </form>
     </div>
 </div>
 
-
-<br/>
-{% if credList|length == 0 %}
-<h2>No Credits Found</h2>
-{% else %}
-<h2>Credits:</h2>
-{% endif %}
-<ul class="credit_list list">
-    {% for credit in credList: %}
-    <li>
-        <table>
-            <tr>
-                <td><b>{{credit['date'].strftime("%B")}}</b></td>
-                <td>{{credit['sender']}}</td>
-                <td>${{credit['cost']}}</td>
-            </tr>
-            <tr>
-                <td>{{credit['date'].day}}</td>
-                <td><b>{{credit['description']}}</b></td>
-                <td>
-                    <button class="edit">Edit</button>
-                </td>
-            </tr>
-        </table>
-    </li>
-    {% if not credit == credList[-1] %}
-    <hr/>
+<!-- Maybe have toggle switch or something for confirmed/unconfirmed transactions -->
+<div class="content confirmed transActive">
+    <br/>
+    {% if not credListConfirmed %}
+    <h2>No Credits Found</h2>
+    {% else %}
+    <h2>Credits:</h2>
     {% endif %}
-    {% endfor %}
-</ul>
+    <ul class="credit_list list">
+        {% for credit in credListConfirmed: %}
+        <li>
+            <table>
+                <tr>
+                    <td><b>{{credit['date'].strftime("%B")}}</b></td>
+                    <td>{{credit['sender']}}</td>
+                    <td>${{credit['cost']}}</td>
+                </tr>
+                <tr>
+                    <td>{{credit['date'].day}}</td>
+                    <td><b>{{credit['description']}}</b></td>
+                    <td>
+                        <button class="edit">Edit</button>
+                        <!-- on confirm, pass value {{credit['transactionid']}} for js function -->
+                    </td>
+                </tr>
+            </table>
+            {% if not credit == credListConfirmed[-1] %}
+            <hr/>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
 
 
-{% if debtList|length == 0 %}
-<h2>No Debts Found</h2>
-{% else %}
-<h2>Debts:</h2>
-{% endif %}
-<ul class="debt_list list">
-    {% for debt in debtList: %}
-    <li>
-        <table>
-            <tr>
-                <td><b>{{debt['date'].strftime("%B")}}</b></td>
-                <td>{{debt['sender']}}</td>
-                <td>-${{(-1)*debt['cost']}}</td>
-            </tr>
-            <tr>
-                <td>{{debt['date'].day}}</td>
-                <td><b>{{debt['description']}}</b></td>
-                <td>
-                    <button>Edit</button>
-                </td>
-            </tr>
-        </table>
-    </li>
-    {% if not debt == debtList[-1] %}
-    <hr/>
+    {% if not debtListConfirmed %}
+    <h2>No Debts Found</h2>
+    {% else %}
+    <h2>Debts:</h2>
     {% endif %}
-    {% endfor %}
-</ul>
+    <ul class="debt_list list">
+        {% for debt in debtListConfirmed: %}
+        <li>
+            <table>
+                <tr>
+                    <td><b>{{debt['date'].strftime("%B")}}</b></td>
+                    <td>{{debt['sender']}}</td>
+                    <td>-${{(-1)*debt['cost']}}</td>
+                </tr>
+                <tr>
+                    <td>{{debt['date'].day}}</td>
+                    <td><b>{{debt['description']}}</b></td>
+                    <td>
+                        <button class="edit">Edit</button>
+                        <!-- on confirm, pass value {{debt['transactionid']}} for js function -->
+                    </td>
+                </tr>
+            </table>
+            {% if not debt == debtListConfirmed[-1] %}
+            <hr/>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="content pending">
+    <br/>
+    {% if not pending %}
+    <h2>No Pending Transactions Found</h2>
+    {% else %}
+    <h2>Pending Transactions:</h2>
+    {% endif %}
+    <ul class="pendingList">
+        {% for trans in pending: %}
+        <li class="{% if trans['cost'] < 0 %}debt{% else %}credit{% endif %}
+        {% if trans == pending[0] %}first{% endif %}
+        {% if trans == pending[-1] %}last{% endif %}">
+            <table>
+                <tr>
+                    <td><b>{{trans['date'].strftime("%B")}}</b></td>
+                    <td>{{trans['sender']}}</td>
+                    {% if trans['cost'] < 0 %}
+                    <td>-${{(-1)*trans['cost']}}</td>
+                    {% else %}
+                    <td>${{trans['cost']}}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>{{trans['date'].day}}</td>
+                    <td><b>{{trans['description']}}</b></td>
+                    {% if trans['addedby'] == session['username'] %}
+                    <td id="awaitingConfirmation">Awaiting Confirmation</td>
+                    {% else %}
+                    <td>
+                        <button id="confirmTransaction" onclick="confirmTransaction({{trans['transactionid']}})">Confirm
+                            Transaction
+                        </button>
+                    </td>
+                    {% endif %}
+                </tr>
+            </table>
+            <!--{% if not trans == pending[-1] %}
+            <hr />
+            {% endif %}-->
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
 {% else %}
 <h2>Not Logged In</h2>
 {% endif %}

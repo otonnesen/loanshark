@@ -34,7 +34,7 @@ li.navbar a:hover:not(.active) {
     background-color: #111;
 }
 
-.active {
+li.navbar a.active {
     background-color: #4CAF50;
 }
 
