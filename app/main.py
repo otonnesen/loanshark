@@ -15,7 +15,7 @@ except LookupError:
 
 
 app = Flask(__name__)
-app.secret_key = os.environ['secretkey']
+app.secret_key = os.urandom(24)
 
 @app.route('/', methods=['GET'])
 def main():

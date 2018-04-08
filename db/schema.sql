@@ -246,7 +246,7 @@ BEGIN
 END;
 $$;
 
-te function validate(uname text, pass text)
+create function validate(uname text, pass text)
   returns boolean
 language plpgsql
 as $$
