@@ -1,1 +1,1 @@
-web: python main.py
+web: pipenv shell && python main.py
