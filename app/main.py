@@ -80,6 +80,7 @@ def getTransactionData():
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT * FROM get_all_transactions() ORDER BY transactionid;')
         d = cur.fetchall()
+        conn.commit()
         return jsonify(d)
 
 @app.route('/data/users', methods=['GET'])
@@ -91,6 +92,7 @@ def getUserData():
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT username, firstname, lastname FROM users;')
         d = cur.fetchall()
+        conn.commit()
         return jsonify(d) 
 
 @app.route('/settings', methods=['GET'])
@@ -110,6 +112,7 @@ def transactions():
         debtConfirmed = cur.fetchall()
         cur.execute('SELECT * FROM get_credit_data_unconfirmed(%s) UNION SELECT * FROM get_debt_data_unconfirmed(%s)', (id, id))
         pending = cur.fetchall()
+        conn.commit()
         return render_template('transaction_list.html', credListConfirmed=credConfirmed, debtListConfirmed=debtConfirmed, pending=pending)
 
 @app.route('/confirmTransaction', methods=['POST'])
@@ -129,6 +132,7 @@ def getIdData(id):
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT * FROM get_credit_data_confirmed(%s) UNION SELECT * FROM get_debt_data_confirmed(%s)', (id, id))
         d = cur.fetchall()
+        conn.commit()
         return jsonify(d)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -146,9 +150,9 @@ def login():
                 f = cur.fetchone()
                 session['firstname'] = f['firstname']
                 flash('Login successful!')
+            conn.commit()
             return jsonify(d)
-    with conn.cursor() as cur:
-        return render_template('login.html')
+    return render_template('login.html')
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -158,8 +162,7 @@ def logout():
 
 @app.route('/create')
 def create():
-    with conn.cursor() as cur:
-        return render_template('create.html')
+    return render_template('create.html')
 
 # @app.route('/checkCred', methods=['POST'])
 # def checkCred():
