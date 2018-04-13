@@ -15,7 +15,8 @@ create table transactions
   confirmed     boolean default false                not null,
   addedby       text                                 not null
     constraint addedby
-    references users
+    references users,
+  complete      boolean default false                not null
 );
 
 create unique index transactions_transactionid_uindex
@@ -65,39 +66,17 @@ BEGIN
 END;
 $$;
 
-create function get_all_transactions()
-  returns TABLE(transactionid integer, owner text, sender text, cost numeric, date date, description text, confirmed boolean)
+create function validate(uname text, pass text)
+  returns boolean
 language plpgsql
 as $$
 BEGIN
-  RETURN QUERY SELECT
-                 a.transactionid,
-                 a.owner,
-                 b.sender,
-                 a.cost,
-                 a.date,
-                 a.description,
-                 a.confirmed
-               FROM (SELECT
-                       transactions.transactionid,
-                       firstname AS owner,
-                       transactions.cost,
-                       transactions.date,
-                       transactions.description,
-                       transactions.confirmed
-                     FROM transactions
-                       INNER JOIN users ON transactions.owner = users.username) AS a NATURAL JOIN (SELECT
-                                                                                                transactions.transactionid,
-                                                                                                firstname AS sender
-                                                                                              FROM users
-                                                                                                INNER JOIN transactions
-                                                                                                  ON transactions.sender
-                                                                                                     = users.username) AS b;
+RETURN EXISTS (SELECT * FROM users WHERE username=uname AND password=crypt(pass, password));
 END;
 $$;
 
-create function get_credit_data_confirmed(searcheduser text)
-  returns TABLE(transactionid int, owner text, sender text, cost numeric, date date, description text, confirmed boolean, addedby text)
+create function get_all_transactions()
+  returns TABLE(transactionid integer, owner text, sender text, cost numeric, date date, description text, confirmed boolean, complete boolean)
 language plpgsql
 as $$
 BEGIN
@@ -109,6 +88,43 @@ BEGIN
                  a.date,
                  a.description,
                  a.confirmed,
+                 a.complete
+               FROM (SELECT
+                       transactions.transactionid,
+                       firstname AS owner,
+                       transactions.cost,
+                       transactions.date,
+                       transactions.description,
+                       transactions.confirmed,
+                       transactions.complete
+                     FROM transactions
+                       INNER JOIN users ON transactions.owner = users.username) AS a NATURAL JOIN (SELECT
+                                                                                                     transactions.transactionid,
+                                                                                                     firstname AS sender
+                                                                                                   FROM users
+                                                                                                     INNER JOIN
+                                                                                                     transactions
+                                                                                                       ON
+                                                                                                         transactions.sender
+                                                                                                         =
+                                                                                                         users.username) AS b;
+END;
+$$;
+
+create function get_credit_data_confirmed(searcheduser text)
+  returns TABLE(transactionid integer, owner text, sender text, cost numeric, date date, description text, confirmed boolean, complete boolean, addedby text)
+language plpgsql
+as $$
+BEGIN
+  RETURN QUERY SELECT
+                 a.transactionid,
+                 a.owner,
+                 b.sender,
+                 a.cost,
+                 a.date,
+                 a.description,
+                 a.confirmed,
+                 a.complete,
                  a.addedby
                FROM (
                       SELECT
@@ -118,6 +134,7 @@ BEGIN
                         transactions.date,
                         transactions.description,
                         transactions.confirmed,
+                        transactions.complete,
                         transactions.addedby
                       FROM
                         transactions
@@ -134,7 +151,7 @@ END;
 $$;
 
 create function get_credit_data_unconfirmed(searcheduser text)
-  returns TABLE(transactionid int, owner text, sender text, cost numeric, date date, description text, confirmed boolean, addedby text)
+  returns TABLE(transactionid integer, owner text, sender text, cost numeric, date date, description text, confirmed boolean, complete boolean, addedby text)
 language plpgsql
 as $$
 BEGIN
@@ -146,6 +163,7 @@ BEGIN
                  a.date,
                  a.description,
                  a.confirmed,
+                 a.complete,
                  a.addedby
                FROM (
                       SELECT
@@ -155,6 +173,7 @@ BEGIN
                         transactions.date,
                         transactions.description,
                         transactions.confirmed,
+                        transactions.complete,
                         transactions.addedby
                       FROM
                         transactions
@@ -171,7 +190,7 @@ END;
 $$;
 
 create function get_debt_data_confirmed(searcheduser text)
-  returns TABLE(transactionid int, owner text, sender text, cost numeric, date date, description text, confirmed boolean, addedby text)
+  returns TABLE(transactionid integer, owner text, sender text, cost numeric, date date, description text, confirmed boolean, complete boolean, addedby text)
 language plpgsql
 as $$
 BEGIN
@@ -183,6 +202,7 @@ BEGIN
                  a.date,
                  a.description,
                  a.confirmed,
+                 a.complete,
                  a.addedby
                FROM (
                       SELECT
@@ -192,6 +212,7 @@ BEGIN
                         transactions.date,
                         transactions.description,
                         transactions.confirmed,
+                        transactions.complete,
                         transactions.addedby
                       FROM
                         transactions
@@ -209,7 +230,7 @@ END;
 $$;
 
 create function get_debt_data_unconfirmed(searcheduser text)
-  returns TABLE(transactionid int, owner text, sender text, cost numeric, date date, description text, confirmed boolean, addedby text)
+  returns TABLE(transactionid integer, owner text, sender text, cost numeric, date date, description text, confirmed boolean, complete boolean, addedby text)
 language plpgsql
 as $$
 BEGIN
@@ -221,6 +242,7 @@ BEGIN
                  a.date,
                  a.description,
                  a.confirmed,
+                 a.complete,
                  a.addedby
                FROM (
                       SELECT
@@ -230,6 +252,7 @@ BEGIN
                         transactions.date,
                         transactions.description,
                         transactions.confirmed,
+                        transactions.complete,
                         transactions.addedby
                       FROM
                         transactions
@@ -243,15 +266,6 @@ BEGIN
                                 INNER JOIN transactions ON transactions.owner = users.username) AS b
                    ON a.transactionid = b.transactionid
                WHERE NOT a.confirmed;
-END;
-$$;
-
-create function validate(uname text, pass text)
-  returns boolean
-language plpgsql
-as $$
-BEGIN
-RETURN EXISTS (SELECT * FROM users WHERE username=uname AND password=crypt(pass, password));
 END;
 $$;
 

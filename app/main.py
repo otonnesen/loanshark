@@ -21,16 +21,6 @@ app.secret_key = os.urandom(24)
 def main():
     return render_template('main.html')
 
-# @app.route('/addUser', methods=['POST'])
-# def addUser():
-#     with conn.cursor() as cur:
-#         fName = request.form['first_name']
-#         lName = request.form['last_name']
-#         cur.execute('SELECT add_user(%s, %s)', (fName, lName))
-#         conn.commit()
-#         resp = make_response(redirect('/'))
-#         return resp
-
 @app.route('/addCredit', methods=['POST'])
 def addCredit():
     sender = request.get_json()['sender']
@@ -56,20 +46,6 @@ def addDebt():
             cur.execute('SELECT add_loan(%s, %s, %s, %s, %s);', (owner, session['username'],  cost, description, session['username']))
             conn.commit()
         return jsonify(d)
-
-# @app.route('/addLoan', methods=['POST'])
-# def addLoan():
-#     with conn.cursor() as cur:
-#         owner = request.form['owner']
-#         sender = request.form['sender']
-#         cost = request.form['cost']
-#         description = request.form['description']
-#         resp = make_response(redirect('/'))
-#         if(owner==sender):
-#             return resp
-#         cur.execute('SELECT add_loan(%s, %s, %s, %s)', (int(owner), int(sender), cost, description))
-#         conn.commit()
-#         return resp
 
 @app.route('/data/transactions', methods=['GET'])
 def getTransactionData():
@@ -106,20 +82,30 @@ def transactions():
         return render_template('transaction_list.html')
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         id = session['username']
-        cur.execute('SELECT * FROM get_credit_data_confirmed(%s)', (id,))
+        cur.execute('SELECT * FROM get_credit_data_confirmed(%s) WHERE complete=%s', (id,'f'))
         credConfirmed = cur.fetchall()
-        cur.execute('SELECT * FROM get_debt_data_confirmed(%s)', (id,))
+        cur.execute('SELECT * FROM get_debt_data_confirmed(%s) WHERE complete=%s', (id,'f'))
         debtConfirmed = cur.fetchall()
         cur.execute('SELECT * FROM get_credit_data_unconfirmed(%s) UNION SELECT * FROM get_debt_data_unconfirmed(%s)', (id, id))
         pending = cur.fetchall()
+        cur.execute('SELECT * FROM get_credit_data_confirmed(%s) WHERE complete=%s UNION SELECT * FROM get_debt_data_confirmed(%s) WHERE complete=%s', (id, 't', id, 't'))
+        complete = cur.fetchall()
         conn.commit()
-        return render_template('transaction_list.html', credListConfirmed=credConfirmed, debtListConfirmed=debtConfirmed, pending=pending)
+        return render_template('transaction_list.html', credListConfirmed=credConfirmed, debtListConfirmed=debtConfirmed, pending=pending, complete=complete)
 
 @app.route('/confirmTransaction', methods=['POST'])
 def confirmTransaction():
     tid = request.get_json()['tid']
     with conn.cursor() as cur:
-        cur.execute('UPDATE transactions SET confirmed=%s WHERE transactionid=%s', ('t', tid,))
+        cur.execute('UPDATE transactions SET confirmed=%s WHERE transactionid=%s', ('t', tid))
+        conn.commit()
+        return jsonify({'success':True})
+
+@app.route('/completeTransaction', methods=['POST'])
+def completeTransaction():
+    tid = request.get_json()['tid']
+    with conn.cursor() as cur:
+        cur.execute('UPDATE transactions SET complete=%s WHERE transactionid=%s', ('t', tid))
         conn.commit()
         return jsonify({'success':True})
 
@@ -137,22 +123,22 @@ def getIdData(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.get_json()['username']
-        password = request.get_json()['password']
-        with conn.cursor(cursor_factory=RealDictCursor) as cur:
-            cur.execute('SELECT validate(%s, %s);', (username, password))
-            d = cur.fetchone()
-            if(d['validate'] == True):
-                session['username'] = username
-                conn.commit()
-                cur.execute('SELECT firstname FROM USERS WHERE username=%s', (username,))
-                f = cur.fetchone()
-                session['firstname'] = f['firstname']
-                flash('Login successful!')
+    if request.method == 'GET':
+        return render_template('login.html')
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute('SELECT validate(%s, %s);', (username, password))
+        d = cur.fetchone()
+        if(d['validate'] == True):
+            session['username'] = username
             conn.commit()
-            return jsonify(d)
-    return render_template('login.html')
+            cur.execute('SELECT firstname FROM USERS WHERE username=%s', (username,))
+            f = cur.fetchone()
+            session['firstname'] = f['firstname']
+            flash('Login successful!')
+        conn.commit()
+        return jsonify(d)
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -160,23 +146,10 @@ def logout():
     flash('Logged out')
     return redirect('/')
 
-@app.route('/create')
+@app.route('/create', methods=['GET', 'POST'])
 def create():
-    return render_template('create.html')
-
-# @app.route('/checkCred', methods=['POST'])
-# def checkCred():
-#     username = request.get_json()['username']
-#     password = request.get_json()['password']
-#     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-#         cur.execute('SELECT validate(%s, %s);', (username, password))
-#         d = cur.fetchone()
-#         if(d['validate']==True):
-#             session['username'] = username
-#         return jsonify(d)
-
-@app.route('/createUser', methods=['POST'])
-def createUser():
+    if request.method == 'GET':
+        return render_template('create.html')
     username = request.get_json()['username']
     password = request.get_json()['password']
     firstname = request.get_json()['firstname']
@@ -184,13 +157,12 @@ def createUser():
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute('SELECT EXISTS (SELECT * FROM users WHERE username=%s);', (username,))
         d = cur.fetchone()
-        print(d)
         if not d['exists']: # Username available
             flash('Success! You may now login.')
             cur.execute('SELECT createuser(%s, %s, %s, %s);', (username, password, firstname, lastname))
             conn.commit()
         return jsonify(d)
-
+    
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)

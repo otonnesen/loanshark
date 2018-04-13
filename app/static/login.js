@@ -1,4 +1,4 @@
-var getData = function (url, params) {
+let getData = function (url, params) {
     getJSON(url, params,
         function (err, data) {
             if (err !== null) {
@@ -10,11 +10,11 @@ var getData = function (url, params) {
         });
 };
 
-var authenticate = function () {
+let authenticate = function () {
     //document.getElementById('submit').style.cursor = 'not-allowed';
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    var params = JSON.stringify({username: username, password: password});
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const params = JSON.stringify({username: username, password: password});
     getData('/login', params);
 };
 
@@ -31,7 +31,7 @@ function loginSuccess() {
     if (document.contains(document.getElementById('login'))) {
         document.getElementById('login').remove();
     }
-    var p = document.createElement('P');
+    const p = document.createElement('P');
     document.getElementsByTagName('BODY')[0].appendChild(p);
     p.setAttribute('id', 'login');
     p.innerText = 'Login Success';
@@ -43,7 +43,7 @@ function loginFailure() {
     if (document.contains(document.getElementById('login'))) {
         document.getElementById('login').remove();
     }
-    var p = document.createElement('P');
+    const p = document.createElement('P');
     document.getElementsByTagName('BODY')[0].appendChild(p);
     p.setAttribute('id', 'login');
     p.innerText = 'Login Failure';

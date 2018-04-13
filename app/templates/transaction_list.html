@@ -8,6 +8,7 @@
 <ul class="transNavbar">
     <li class="transNavbar"><a class="confirmed transActive" onclick="setActive('confirmed');">Confirmed</a></li>
     <li class="transNavbar"><a class="pending" onclick="setActive('pending');">Pending</a></li>
+    <li class="transNavbar"><a class="complete" onclick="setActive('complete');">Complete</a></li>
 </ul>
 
 <div class="content confirmed transActive">
@@ -16,6 +17,10 @@
 
 <div class="content pending">
     <h1>Pending Transactions for {{ session['firstname'] }}</h1>
+</div>
+
+<div class="content complete">
+    <h1>Completed Transactions for {{ session['firstname'] }}</h1>
 </div>
 
 <div id="addWrapper">
@@ -70,7 +75,9 @@
                     <td>{{credit['date'].day}}</td>
                     <td><b>{{credit['description']}}</b></td>
                     <td>
-                        <button class="edit">Edit</button>
+                        <button class="complete" onclick="completeButton({{credit['transactionid']}});">Complete
+                            Transaction
+                        </button>
                         <!-- on confirm, pass value {{credit['transactionid']}} for js function -->
                     </td>
                 </tr>
@@ -101,8 +108,8 @@
                     <td>{{debt['date'].day}}</td>
                     <td><b>{{debt['description']}}</b></td>
                     <td>
-                        <button class="edit">Edit</button>
-                        <!-- on confirm, pass value {{debt['transactionid']}} for js function -->
+                        <!-- <button class="edit">Edit</button>
+                        on confirm, pass value {{debt['transactionid']}} for js function -->
                     </td>
                 </tr>
             </table>
@@ -112,6 +119,14 @@
         </li>
         {% endfor %}
     </ul>
+</div>
+
+<div id="completeModal" class="completeModal">
+    <div class="completeModal-content">
+        <h3>Are you sure?</h3>
+        <a id="completeCancel" class="completeModalButton" onclick="cancel();">Cancel</a>
+        <a id="completeConfirm" class="completeModalButton" onclick="completeTransaction()">Complete</a>
+    </div>
 </div>
 
 <div class="content pending">
@@ -151,6 +166,42 @@
                 </tr>
             </table>
             <!--{% if not trans == pending[-1] %}
+            <hr />
+            {% endif %}-->
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="content complete">
+    <br/>
+    {% if not complete %}
+    <h2>No Completed Transactions Found</h2>
+    {% else %}
+    <h2>Completed Transactions:</h2>
+    {% endif %}
+    <ul class="completeList">
+        {% for trans in complete: %}
+        <li class="{% if trans['cost'] < 0 %}debt{% else %}credit{% endif %}
+        {% if trans == complete[0] %}first{% endif %}
+        {% if trans == complete[-1] %}last{% endif %}">
+            <table>
+                <tr>
+                    <td><b>{{trans['date'].strftime("%B")}}</b></td>
+                    <td>{{trans['sender']}}</td>
+                    {% if trans['cost'] < 0 %}
+                    <td>-${{(-1)*trans['cost']}}</td>
+                    {% else %}
+                    <td>${{trans['cost']}}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>{{trans['date'].day}}</td>
+                    <td><b>{{trans['description']}}</b></td>
+                    <td></td>
+                </tr>
+            </table>
+            <!--{% if not trans == complete[-1] %}
             <hr />
             {% endif %}-->
         </li>

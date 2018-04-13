@@ -13,5 +13,7 @@
     - [x] Separate tables for confirmed (by both parties) transactions and unconfirmed transactions
     - [x] Notifications for incoming transactions?
     	- Kind of done, I guess?
+    - [ ] Complete transactions
     - [ ] Transfer transactions
+- [] Maybe change active transactions layout to be similar to pending transacitons
 - [x] Make database schema (Tables, sequences, functions, etc)

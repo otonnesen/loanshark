@@ -1,6 +1,5 @@
 function setActive(className) {
     Array.from(document.getElementsByClassName('sidebarActive')).forEach(function (item) {
-        console.log(item);
         item.classList.remove('sidebarActive');
     });
 

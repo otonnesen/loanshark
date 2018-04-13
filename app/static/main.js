@@ -1,12 +1,12 @@
 window.onload = function () {
-    var modalU = document.getElementById("addUserModal");
-    var modalL = document.getElementById("addLoanModal");
+    const modalU = document.getElementById("addUserModal");
+    const modalL = document.getElementById("addLoanModal");
 
-    var btnU = document.getElementById("addUserButton");
-    var btnL = document.getElementById("addLoanButton");
+    const btnU = document.getElementById("addUserButton");
+    const btnL = document.getElementById("addLoanButton");
 
-    var spanU = document.getElementsByClassName("close")[0];
-    var spanL = document.getElementsByClassName("close")[1];
+    const spanU = document.getElementsByClassName("close")[0];
+    const spanL = document.getElementsByClassName("close")[1];
 
     /*btnU.onclick = function () {
         modalU.style.display = "block";
